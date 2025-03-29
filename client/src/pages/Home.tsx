@@ -7,7 +7,7 @@ import SubjectsSection from '@/components/SubjectsSection';
 import TestSampleSection from '@/components/TestSampleSection';
 import RewardsSection from '@/components/RewardsSection';
 import Footer from '@/components/Footer';
-import TestModal from '@/components/TestModal';
+import AnimatedBackground from '@/components/AnimatedBackground';
 import EnhancedTestModal from '@/components/EnhancedTestModal';
 
 const Home: React.FC = () => {
@@ -41,9 +41,15 @@ const Home: React.FC = () => {
   
   return (
     <div className="min-h-screen bg-space">
+      {/* Animated floating objects in background */}
+      <AnimatedBackground 
+        reducedMotion={reducedMotion} 
+        onSelectSubject={handleSelectSubject} 
+      />
+    
       <Navbar reducedMotion={reducedMotion} setReducedMotion={setReducedMotion} />
       
-      <main>
+      <main className="relative z-10">
         <HeroSection reducedMotion={reducedMotion} onStartLearning={handleStartLearning} />
         <SubjectsSection subjects={subjects} onSelectSubject={handleSelectSubject} />
         <TestSampleSection test={scienceTest} />

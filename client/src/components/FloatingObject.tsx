@@ -1,7 +1,4 @@
-import React, { useRef } from 'react';
-import { useFrame } from '@react-three/fiber';
-import { Box, Sphere, useTexture } from '@react-three/drei';
-import { MathUtils, Mesh, Vector3 } from 'three';
+import React, { useState } from 'react';
 
 type FloatingObjectProps = {
   position: [number, number, number];
@@ -21,134 +18,137 @@ const FloatingObject: React.FC<FloatingObjectProps> = ({
   position,
   rotation = [0, 0, 0],
   scale = 1,
-  color = '#6366F1',
+  color = 'primary',
   speed = 1,
-  amplitude = 0.5,
+  amplitude = 1,
   objectType,
   onClick,
-  hoverState = false,
+  hoverState,
+  subjectId,
   reducedMotion = false
 }) => {
-  const meshRef = useRef<Mesh>(null);
-  const initialY = position[1];
-  const initialPosition = new Vector3(position[0], position[1], position[2]);
+  const [isHovered, setIsHovered] = useState(false);
   
-  // Unique movement pattern based on object ID
-  const randomOffset = useRef(Math.random() * 10000);
-  
-  useFrame((_state, delta) => {
-    if (meshRef.current && !reducedMotion) {
-      // Float effect
-      if (!hoverState) {
-        meshRef.current.position.y = initialY + Math.sin((Date.now() + randomOffset.current) * 0.001 * speed) * amplitude;
-      
-        // Slow rotation
-        meshRef.current.rotation.x += delta * 0.1 * speed;
-        meshRef.current.rotation.y += delta * 0.15 * speed;
-      } else {
-        // Hover state animation - wobble effect
-        meshRef.current.rotation.z = Math.sin(Date.now() * 0.005) * 0.1;
-        meshRef.current.rotation.x = Math.sin(Date.now() * 0.003) * 0.05;
-        
-        // Move slightly up when hovered
-        meshRef.current.position.y = initialY + amplitude + 0.3;
-      }
-    } else if (meshRef.current && reducedMotion) {
-      // Reset to initial position when reduced motion is active
-      meshRef.current.position.copy(initialPosition);
-      meshRef.current.rotation.set(rotation[0], rotation[1], rotation[2]);
-    }
-  });
-
-  const renderObject = () => {
+  const getObjectIcon = () => {
     switch (objectType) {
       case 'book':
-        return (
-          <Box
-            args={[1.2, 0.2, 1.5]}
-            scale={scale}
-            onClick={onClick}
-            onPointerOver={() => { document.body.style.cursor = 'pointer'; }}
-            onPointerOut={() => { document.body.style.cursor = 'auto'; }}
-          >
-            <meshStandardMaterial color={color} metalness={0.1} roughness={0.8} />
-          </Box>
-        );
+        return 'fa-book';
       case 'notebook':
-        return (
-          <Box 
-            args={[1, 0.1, 1.2]} 
-            scale={scale}
-            onClick={onClick}
-            onPointerOver={() => { document.body.style.cursor = 'pointer'; }}
-            onPointerOut={() => { document.body.style.cursor = 'auto'; }}
-          >
-            <meshStandardMaterial color={color} metalness={0.1} roughness={0.7} />
-          </Box>
-        );
+        return 'fa-book-open';
       case 'pencil':
-        return (
-          <group scale={scale} onClick={onClick}>
-            <Box args={[0.1, 1, 0.1]} position={[0, 0, 0]}>
-              <meshStandardMaterial color="#FFD700" />
-            </Box>
-            <Box args={[0.1, 0.2, 0.1]} position={[0, 0.6, 0]}>
-              <meshStandardMaterial color="#333333" />
-            </Box>
-            <Box args={[0.1, 0.1, 0.1]} position={[0, -0.55, 0]} rotation={[0, 0, Math.PI / 4]}>
-              <meshStandardMaterial color="#FFBB88" />
-            </Box>
-          </group>
-        );
+        return 'fa-pencil-alt';
       case 'planet':
-        return (
-          <Sphere args={[1, 32, 32]} scale={scale} onClick={onClick}>
-            <meshStandardMaterial
-              color={color}
-              metalness={0.2}
-              roughness={0.8}
-              emissive={color}
-              emissiveIntensity={0.2}
-            />
-          </Sphere>
-        );
+        return 'fa-globe-asia';
       case 'rocket':
-        return (
-          <group scale={scale} onClick={onClick}>
-            <Box args={[0.5, 1.5, 0.5]} position={[0, 0, 0]}>
-              <meshStandardMaterial color="#FFFFFF" />
-            </Box>
-            <Box args={[0.7, 0.2, 0.7]} position={[0, -0.7, 0]}>
-              <meshStandardMaterial color={color} />
-            </Box>
-            <Box args={[0.3, 0.8, 0.3]} position={[0, 1, 0]} rotation={[0, 0, 0]}>
-              <meshStandardMaterial color={color} />
-            </Box>
-            <Box args={[0.7, 0.1, 0.1]} position={[0, 0, 0]}>
-              <meshStandardMaterial color={color} />
-            </Box>
-            <Box args={[0.1, 0.1, 0.7]} position={[0, 0, 0]}>
-              <meshStandardMaterial color={color} />
-            </Box>
-          </group>
-        );
+        return 'fa-rocket';
       default:
-        return (
-          <Box args={[1, 1, 1]} scale={scale} onClick={onClick}>
-            <meshStandardMaterial color={color} />
-          </Box>
-        );
+        return 'fa-book';
     }
   };
-
+  
+  const getObjectColor = () => {
+    switch (objectType) {
+      case 'book':
+        return 'text-violet-400';
+      case 'notebook':
+        return 'text-emerald-400';
+      case 'pencil':
+        return 'text-yellow-400';
+      case 'planet':
+        return 'text-blue-400';
+      case 'rocket':
+        return 'text-red-400';
+      default:
+        return 'text-white';
+    }
+  };
+  
+  const getAnimationClass = () => {
+    if (reducedMotion) return '';
+    
+    switch (objectType) {
+      case 'book':
+        return 'animate-float';
+      case 'notebook':
+        return 'animate-float-delayed';
+      case 'pencil':
+        return 'animate-spin-slow';
+      case 'planet':
+        return 'animate-float-slow';
+      case 'rocket':
+        return 'animate-bounce-slow';
+      default:
+        return 'animate-float';
+    }
+  };
+  
+  const calculatePosition = () => {
+    return {
+      left: `${position[0]}%`,
+      top: `${position[1]}%`,
+      zIndex: Math.floor(position[2])
+    };
+  };
+  
+  const tooltip = () => {
+    if (subjectId && isHovered) {
+      let tooltipText = '';
+      
+      switch (subjectId) {
+        case 'math':
+          tooltipText = 'Mathematics Tests';
+          break;
+        case 'science':
+          tooltipText = 'Science Tests';
+          break;
+        case 'english':
+          tooltipText = 'English Tests';
+          break;
+        case 'hindi':
+          tooltipText = 'Hindi Tests';
+          break;
+        case 'social':
+          tooltipText = 'Social Studies Tests';
+          break;
+        case 'sanskrit':
+          tooltipText = 'Sanskrit Tests';
+          break;
+        default:
+          tooltipText = 'Take a Test';
+      }
+      
+      return (
+        <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 bg-space/90 text-white px-4 py-2 rounded-lg shadow-lg whitespace-nowrap z-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="text-sm font-medium">{tooltipText}</div>
+          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-3 h-3 bg-space/90 rotate-45"></div>
+        </div>
+      );
+    }
+    
+    return null;
+  };
+  
   return (
-    <mesh
-      ref={meshRef}
-      position={[position[0], position[1], position[2]]}
-      rotation={[rotation[0], rotation[1], rotation[2]]}
+    <div 
+      className={`absolute ${getAnimationClass()} group cursor-pointer transform-gpu`}
+      style={calculatePosition()}
+      onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      {renderObject()}
-    </mesh>
+      {tooltip()}
+      <div
+        className={`transform p-4 ${hoverState ? 'scale-125' : 'scale-100'} transition-transform duration-300 ease-in-out`}
+        style={{
+          transform: `scale(${scale}) rotateX(${rotation[0]}deg) rotateY(${rotation[1]}deg) rotateZ(${rotation[2]}deg)`,
+        }}
+      >
+        <div className={`relative ${isHovered ? 'scale-125' : ''} transition-all duration-300`}>
+          <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-300"></div>
+          <i className={`fas ${getObjectIcon()} text-3xl md:text-4xl ${getObjectColor()} drop-shadow-lg`}></i>
+        </div>
+      </div>
+    </div>
   );
 };
 

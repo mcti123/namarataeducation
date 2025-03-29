@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface ConfettiProps {
   count?: number;
@@ -15,90 +15,59 @@ interface ConfettiPiece {
   animationDelay: number;
 }
 
-const ConfettiEffect: React.FC<ConfettiProps> = ({ count = 100, duration = 3000 }) => {
+const ConfettiEffect: React.FC<ConfettiProps> = ({ 
+  count = 50,
+  duration = 3000
+}) => {
   const [confetti, setConfetti] = useState<ConfettiPiece[]>([]);
   
   useEffect(() => {
-    // Create confetti pieces
-    const colors = [
-      '#f44336', '#e91e63', '#9c27b0', '#673ab7', 
-      '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4',
-      '#009688', '#4caf50', '#8bc34a', '#cddc39', 
-      '#ffeb3b', '#ffc107', '#ff9800', '#ff5722'
-    ];
+    const colors = ['#FFC700', '#FF0055', '#2D95BF', '#00CC8F', '#E85AFF'];
+    const newConfetti: ConfettiPiece[] = [];
     
-    const pieces: ConfettiPiece[] = [];
     for (let i = 0; i < count; i++) {
-      pieces.push({
+      newConfetti.push({
         id: i,
         x: Math.random() * 100, // random position across the screen
-        y: Math.random() * -100, // start above the screen
+        y: 0, // start from the top
         size: Math.random() * 1 + 0.5, // random size between 0.5 and 1.5
         color: colors[Math.floor(Math.random() * colors.length)],
-        rotation: Math.random() * 360, // random initial rotation
-        animationDelay: Math.random() * 500, // stagger the animation start
+        rotation: Math.random() * 360, // random rotation
+        animationDelay: Math.random() * 500 // random delay for staggered effect
       });
     }
-    setConfetti(pieces);
     
-    // Cleanup after duration
-    const timer = setTimeout(() => {
+    setConfetti(newConfetti);
+    
+    // Clear confetti after duration
+    const timeoutId = setTimeout(() => {
       setConfetti([]);
     }, duration);
     
-    return () => clearTimeout(timer);
+    return () => clearTimeout(timeoutId);
   }, [count, duration]);
-  
-  if (confetti.length === 0) return null;
   
   return (
     <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
-      {confetti.map((piece) => (
-        <div 
+      {confetti.map(piece => (
+        <div
           key={piece.id}
-          className="absolute confetti"
+          className="absolute"
           style={{
             left: `${piece.x}%`,
             top: `${piece.y}%`,
             width: `${piece.size}rem`,
-            height: `${piece.size / 2}rem`,
+            height: `${piece.size * 0.6}rem`,
             backgroundColor: piece.color,
-            transform: `rotate(${piece.rotation}deg)`,
-            opacity: 0,
-            animation: `fall ${duration / 1000}s ease-out`,
+            transform: `rotateZ(${piece.rotation}deg)`,
+            animation: `confetti-fall ${Math.random() * 2 + 2}s linear forwards, confetti-shake ${Math.random() * 2 + 2}s ease-in-out infinite alternate`,
             animationDelay: `${piece.animationDelay}ms`,
+            opacity: 0.8,
+            zIndex: 9999,
+            borderRadius: '2px',
           }}
         />
       ))}
-      
-      {/* Add animation styles */}
-      <style>
-        {`
-          @keyframes fall {
-            0% {
-              opacity: 1;
-              top: -10%;
-              transform: translateY(0) rotate(0deg);
-            }
-            
-            10% {
-              opacity: 1;
-              transform: translateY(0) rotate(${Math.random() * 360}deg);
-            }
-            
-            100% {
-              opacity: 0;
-              top: 100%;
-              transform: translateY(1000px) rotate(${Math.random() * 720}deg);
-            }
-          }
-          
-          .confetti {
-            position: absolute;
-            will-change: transform, opacity;
-          }
-        `}
-      </style>
     </div>
   );
 };

@@ -191,33 +191,221 @@ export const scienceHardQuestions = [
   }
 ];
 
+// Additional science questions for more variety
+const moreEasyQuestions: Question[] = [
+  {
+    id: 'easy-q6',
+    text: 'Which of the following is the closest planet to the Sun?',
+    options: ['Earth', 'Venus', 'Mercury', 'Mars'],
+    correctAnswer: 2,
+    difficulty: 'easy' as DifficultyLevel,
+    explanation: 'Mercury is the closest planet to the Sun.'
+  },
+  {
+    id: 'easy-q7',
+    text: 'What is the name of the largest organ in the human body?',
+    options: ['Brain', 'Liver', 'Heart', 'Skin'],
+    correctAnswer: 3,
+    difficulty: 'easy' as DifficultyLevel,
+    explanation: 'The skin is the largest organ in the human body.'
+  },
+  {
+    id: 'easy-q8',
+    text: 'What is the main function of the lungs?',
+    options: ['To pump blood', 'To digest food', 'To breathe', 'To filter waste'],
+    correctAnswer: 2,
+    difficulty: 'easy' as DifficultyLevel,
+    explanation: 'The main function of the lungs is to take in oxygen and expel carbon dioxide.'
+  },
+  {
+    id: 'easy-q9',
+    text: 'Which of these is NOT a sense organ?',
+    options: ['Eye', 'Ear', 'Heart', 'Nose'],
+    correctAnswer: 2,
+    difficulty: 'easy' as DifficultyLevel,
+    explanation: 'The heart is an organ that pumps blood, not a sense organ.'
+  },
+  {
+    id: 'easy-q10',
+    text: 'Which of the following animals is a mammal?',
+    options: ['Snake', 'Fish', 'Frog', 'Rabbit'],
+    correctAnswer: 3,
+    difficulty: 'easy' as DifficultyLevel,
+    explanation: 'A rabbit is a mammal because it has fur and feeds its young with milk.'
+  }
+];
+
+const moreMediumQuestions: Question[] = [
+  {
+    id: 'medium-q6',
+    text: 'What is the name of the process by which plants lose water through their leaves?',
+    options: ['Photosynthesis', 'Respiration', 'Transpiration', 'Condensation'],
+    correctAnswer: 2,
+    difficulty: 'medium' as DifficultyLevel,
+    explanation: 'Transpiration is the process by which plants lose water vapor through pores in their leaves.'
+  },
+  {
+    id: 'medium-q7',
+    text: 'Which of the following is NOT a vertebrate?',
+    options: ['Fish', 'Bird', 'Insect', 'Mammal'],
+    correctAnswer: 2,
+    difficulty: 'medium' as DifficultyLevel,
+    explanation: 'Insects are invertebrates because they do not have a backbone.'
+  },
+  {
+    id: 'medium-q8',
+    text: 'Which layer of the atmosphere contains the ozone layer?',
+    options: ['Troposphere', 'Stratosphere', 'Mesosphere', 'Thermosphere'],
+    correctAnswer: 1,
+    difficulty: 'medium' as DifficultyLevel,
+    explanation: 'The ozone layer is located in the stratosphere, the second layer of Earth\'s atmosphere.'
+  },
+  {
+    id: 'medium-q9',
+    text: 'What type of energy is stored in food?',
+    options: ['Kinetic energy', 'Thermal energy', 'Chemical energy', 'Nuclear energy'],
+    correctAnswer: 2,
+    difficulty: 'medium' as DifficultyLevel,
+    explanation: 'Food contains chemical energy stored in the bonds between atoms.'
+  },
+  {
+    id: 'medium-q10',
+    text: 'Which of the following is NOT a renewable energy source?',
+    options: ['Solar', 'Wind', 'Coal', 'Hydroelectric'],
+    correctAnswer: 2,
+    difficulty: 'medium' as DifficultyLevel,
+    explanation: 'Coal is a fossil fuel and is not renewable because it takes millions of years to form.'
+  }
+];
+
+const moreIntermediateQuestions: Question[] = [
+  {
+    id: 'intermediate-q6',
+    text: 'What do we call the change of state from solid directly to gas without becoming a liquid?',
+    options: ['Condensation', 'Sublimation', 'Deposition', 'Evaporation'],
+    correctAnswer: 1,
+    difficulty: 'intermediate' as DifficultyLevel,
+    explanation: 'Sublimation is the process where a solid changes directly to a gas without passing through the liquid state.'
+  },
+  {
+    id: 'intermediate-q7',
+    text: 'Which of the following is an example of a physical change?',
+    options: ['Burning wood', 'Cooking an egg', 'Melting ice', 'Rusting iron'],
+    correctAnswer: 2,
+    difficulty: 'intermediate' as DifficultyLevel,
+    explanation: 'Melting ice is a physical change because the chemical composition remains unchanged.'
+  },
+  {
+    id: 'intermediate-q8',
+    text: 'Which planet has the Great Red Spot?',
+    options: ['Mars', 'Venus', 'Jupiter', 'Saturn'],
+    correctAnswer: 2,
+    difficulty: 'intermediate' as DifficultyLevel,
+    explanation: 'The Great Red Spot is a persistent storm on the planet Jupiter.'
+  },
+  {
+    id: 'intermediate-q9',
+    text: 'What instrument is used to measure air pressure?',
+    options: ['Thermometer', 'Barometer', 'Hygrometer', 'Anemometer'],
+    correctAnswer: 1,
+    difficulty: 'intermediate' as DifficultyLevel,
+    explanation: 'A barometer is used to measure atmospheric pressure.'
+  },
+  {
+    id: 'intermediate-q10',
+    text: 'What is the largest part of the human brain?',
+    options: ['Cerebellum', 'Brain stem', 'Cerebrum', 'Hypothalamus'],
+    correctAnswer: 2,
+    difficulty: 'intermediate' as DifficultyLevel,
+    explanation: 'The cerebrum is the largest part of the human brain and controls voluntary actions, speech, and thinking.'
+  }
+];
+
+const moreHardQuestions: Question[] = [
+  {
+    id: 'hard-q6',
+    text: 'Which of these is NOT one of the four fundamental forces in physics?',
+    options: ['Strong nuclear force', 'Electromagnetic force', 'Centrifugal force', 'Gravity'],
+    correctAnswer: 2,
+    difficulty: 'hard' as DifficultyLevel,
+    explanation: 'Centrifugal force is not one of the four fundamental forces. The four fundamental forces are gravity, electromagnetic force, strong nuclear force, and weak nuclear force.'
+  },
+  {
+    id: 'hard-q7',
+    text: 'What is the process by which unstable atoms lose energy by emitting radiation?',
+    options: ['Nuclear fission', 'Nuclear fusion', 'Radioactive decay', 'Thermal decomposition'],
+    correctAnswer: 2,
+    difficulty: 'hard' as DifficultyLevel,
+    explanation: 'Radioactive decay is the process by which unstable nuclei emit radiation to reach a more stable state.'
+  },
+  {
+    id: 'hard-q8',
+    text: 'What law states that energy cannot be created or destroyed, only transformed?',
+    options: ['Law of Conservation of Mass', 'Law of Conservation of Energy', 'Newton\'s First Law', 'Ohm\'s Law'],
+    correctAnswer: 1,
+    difficulty: 'hard' as DifficultyLevel,
+    explanation: 'The Law of Conservation of Energy states that energy cannot be created or destroyed, only converted from one form to another.'
+  },
+  {
+    id: 'hard-q9',
+    text: 'What is the name of the tiny particles that make up light?',
+    options: ['Atoms', 'Molecules', 'Photons', 'Electrons'],
+    correctAnswer: 2,
+    difficulty: 'hard' as DifficultyLevel,
+    explanation: 'Photons are the tiny particles that make up light and other forms of electromagnetic radiation.'
+  },
+  {
+    id: 'hard-q10',
+    text: 'Which of these is a characteristic of all living things?',
+    options: ['Ability to fly', 'Ability to reproduce', 'Ability to speak', 'Ability to swim'],
+    correctAnswer: 1,
+    difficulty: 'hard' as DifficultyLevel,
+    explanation: 'The ability to reproduce is a characteristic of all living things.'
+  }
+];
+
 // Function to generate tests based on difficulty
 export function generateTestByDifficulty(difficulty: DifficultyLevel, subjectId: string) {
+  // Combine original and additional questions
+  const allEasyQuestions = [...scienceEasyQuestions, ...moreEasyQuestions];
+  const allMediumQuestions = [...scienceMediumQuestions, ...moreMediumQuestions];
+  const allIntermediateQuestions = [...scienceIntermediateQuestions, ...moreIntermediateQuestions];
+  const allHardQuestions = [...scienceHardQuestions, ...moreHardQuestions];
+  
+  // Shuffle all question arrays first to ensure randomness
+  const shuffledEasy = [...allEasyQuestions].sort(() => Math.random() - 0.5);
+  const shuffledMedium = [...allMediumQuestions].sort(() => Math.random() - 0.5);
+  const shuffledIntermediate = [...allIntermediateQuestions].sort(() => Math.random() - 0.5);
+  const shuffledHard = [...allHardQuestions].sort(() => Math.random() - 0.5);
+  
+  // Create a unique ID for each question to ensure they're treated as new
+  const uniqueId = Date.now().toString();
+  
   const testQuestions: Question[] = [];
   
   switch(difficulty) {
     case 'easy':
-      testQuestions.push(...scienceEasyQuestions.slice(0, 7));
-      testQuestions.push(...scienceMediumQuestions.slice(0, 3));
+      testQuestions.push(...shuffledEasy.slice(0, 7).map((q, i) => ({...q, id: `${uniqueId}-easy-${i}`})));
+      testQuestions.push(...shuffledMedium.slice(0, 3).map((q, i) => ({...q, id: `${uniqueId}-medium-${i}`})));
       break;
     case 'medium':
-      testQuestions.push(...scienceEasyQuestions.slice(0, 3));
-      testQuestions.push(...scienceMediumQuestions.slice(0, 5));
-      testQuestions.push(...scienceIntermediateQuestions.slice(0, 2));
+      testQuestions.push(...shuffledEasy.slice(0, 3).map((q, i) => ({...q, id: `${uniqueId}-easy-${i}`})));
+      testQuestions.push(...shuffledMedium.slice(0, 5).map((q, i) => ({...q, id: `${uniqueId}-medium-${i}`})));
+      testQuestions.push(...shuffledIntermediate.slice(0, 2).map((q, i) => ({...q, id: `${uniqueId}-intermediate-${i}`})));
       break;
     case 'intermediate':
-      testQuestions.push(...scienceMediumQuestions.slice(0, 3));
-      testQuestions.push(...scienceIntermediateQuestions.slice(0, 5));
-      testQuestions.push(...scienceHardQuestions.slice(0, 2));
+      testQuestions.push(...shuffledMedium.slice(0, 3).map((q, i) => ({...q, id: `${uniqueId}-medium-${i}`})));
+      testQuestions.push(...shuffledIntermediate.slice(0, 5).map((q, i) => ({...q, id: `${uniqueId}-intermediate-${i}`})));
+      testQuestions.push(...shuffledHard.slice(0, 2).map((q, i) => ({...q, id: `${uniqueId}-hard-${i}`})));
       break;
     case 'hard':
-      testQuestions.push(...scienceIntermediateQuestions.slice(0, 2));
-      testQuestions.push(...scienceHardQuestions);
+      testQuestions.push(...shuffledIntermediate.slice(0, 2).map((q, i) => ({...q, id: `${uniqueId}-intermediate-${i}`})));
+      testQuestions.push(...shuffledHard.slice(0, 8).map((q, i) => ({...q, id: `${uniqueId}-hard-${i}`})));
       break;
     default:
-      testQuestions.push(...scienceEasyQuestions.slice(0, 3));
-      testQuestions.push(...scienceMediumQuestions.slice(0, 4));
-      testQuestions.push(...scienceIntermediateQuestions.slice(0, 3));
+      testQuestions.push(...shuffledEasy.slice(0, 3).map((q, i) => ({...q, id: `${uniqueId}-easy-${i}`})));
+      testQuestions.push(...shuffledMedium.slice(0, 4).map((q, i) => ({...q, id: `${uniqueId}-medium-${i}`})));
+      testQuestions.push(...shuffledIntermediate.slice(0, 3).map((q, i) => ({...q, id: `${uniqueId}-intermediate-${i}`})));
   }
   
   // Take exactly 10 questions or pad with defaults if needed
@@ -225,22 +413,37 @@ export function generateTestByDifficulty(difficulty: DifficultyLevel, subjectId:
   if (testQuestions.length > 10) {
     finalQuestions = testQuestions.slice(0, 10);
   } else if (testQuestions.length < 10) {
-    const additionalQuestions = [...scienceMediumQuestions]
+    const additionalQuestions = [...shuffledMedium]
       .filter(q => !testQuestions.some(existing => existing.id === q.id))
-      .slice(0, 10 - testQuestions.length);
+      .slice(0, 10 - testQuestions.length)
+      .map((q, i) => ({...q, id: `${uniqueId}-additional-${i}`}));
     finalQuestions = [...testQuestions, ...additionalQuestions];
   }
   
-  // Shuffle questions - creating a copy to avoid mutating
+  // Get a random chapter based on subjectId
+  const scienceChapters = [
+    "Chapter 1: Introduction to Science",
+    "Chapter 2: The Living World",
+    "Chapter 3: Matter and Materials",
+    "Chapter 4: Motion and Forces",
+    "Chapter 5: Energy",
+    "Chapter 6: Earth and Space",
+    "Chapter 7: Human Body Systems",
+    "Chapter 8: Environment and Ecosystems"
+  ];
+  
+  const randomChapter = scienceChapters[Math.floor(Math.random() * scienceChapters.length)];
+  
+  // Shuffle final questions - creating a copy to avoid mutating
   const shuffled = [...finalQuestions].sort(() => Math.random() - 0.5);
   
   return {
     id: `science-test-${Date.now()}`,
     subjectId,
     title: `Science ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)} Test`,
-    chapter: "Chapter 3: Matter and Materials",
+    chapter: randomChapter,
     icon: "fa-atom",
-    duration: 30,
+    duration: 300, // 5 minutes for easier testing
     difficulty,
     generatedBy: 'ai' as const,
     questions: shuffled
