@@ -46,6 +46,8 @@ interface EnhancedTestModalProps {
   initialTest: Test;
   reducedMotion: boolean;
   subjectId: string;
+  selectedChapter?: string | null;
+  chapterIndex?: number | null;
 }
 
 type TestState = 'intro' | 'in-progress' | 'completed' | 'review';
@@ -55,7 +57,9 @@ const EnhancedTestModal: React.FC<EnhancedTestModalProps> = ({
   onClose,
   initialTest,
   reducedMotion,
-  subjectId
+  subjectId,
+  selectedChapter,
+  chapterIndex
 }) => {
   // Create a unique identifier for each test session
   const [sessionId, setSessionId] = useState<string>(Date.now().toString());
@@ -70,7 +74,7 @@ const EnhancedTestModal: React.FC<EnhancedTestModalProps> = ({
   const [showTrophy, setShowTrophy] = useState<boolean>(false);
   const [difficulty, setDifficulty] = useState<DifficultyLevel>('easy');
   const [availableChapters, setAvailableChapters] = useState<string[]>([]);
-  const [selectedChapter, setSelectedChapter] = useState<string | null>(null);
+  const [localSelectedChapter, setLocalSelectedChapter] = useState<string | null>(null);
   
   // Reset test state when modal is opened/closed
   useEffect(() => {
@@ -90,11 +94,31 @@ const EnhancedTestModal: React.FC<EnhancedTestModalProps> = ({
       const subjectChapters = getChaptersForSubject(subjectId);
       setAvailableChapters(subjectChapters);
       
-      // Create initial test for this subject
-      const initialSubjectTest = generateSubjectTest(subjectId, difficulty);
-      setCurrentTest(initialSubjectTest);
+      // If specific chapter was selected from another component
+      if (selectedChapter) {
+        setLocalSelectedChapter(selectedChapter);
+        
+        // Find chapter index if available
+        const chapterIdx = chapterIndex || 1;
+        
+        // Generate chapter-specific test
+        const chapterTest = generateSubjectTest(subjectId, difficulty, chapterIdx.toString());
+        chapterTest.chapter = selectedChapter;
+        chapterTest.title = `${selectedChapter} Test`;
+        setCurrentTest(chapterTest);
+        
+        // Auto-start the test
+        setTimeout(() => {
+          setTestState('in-progress');
+          setTimeRemaining(chapterTest.duration);
+        }, 500);
+      } else {
+        // Create initial test for this subject
+        const initialSubjectTest = generateSubjectTest(subjectId, difficulty);
+        setCurrentTest(initialSubjectTest);
+      }
     }
-  }, [isOpen, subjectId, difficulty]);
+  }, [isOpen, subjectId, difficulty, selectedChapter, chapterIndex]);
   
   // Generate a new test with different questions based on difficulty
   const generateNewTest = (difficulty: DifficultyLevel, chapter?: string) => {
@@ -229,7 +253,7 @@ const EnhancedTestModal: React.FC<EnhancedTestModalProps> = ({
   
   // Start a new test with chapter selection
   const startChapterTest = (chapter: string) => {
-    setSelectedChapter(chapter);
+    setLocalSelectedChapter(chapter);
     generateNewTest(difficulty, chapter);
     setTestState('intro');
   };

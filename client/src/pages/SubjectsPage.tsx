@@ -17,7 +17,7 @@ type SubjectInfoProps = {
 };
 
 const SubjectInfoCard: React.FC<SubjectInfoProps> = ({ id, name, description, icon, color, reducedMotion }) => {
-  const [location, setLocation] = useState(window.location.hash);
+  const [location, setLocation] = useLocation();
   
   const getIcon = () => {
     switch (id) {
@@ -36,6 +36,19 @@ const SubjectInfoCard: React.FC<SubjectInfoProps> = ({ id, name, description, ic
       default:
         return <Book className="h-10 w-10 text-white" />;
     }
+  };
+  
+  // Start test handler
+  const handleStartTest = () => {
+    // Navigate to home page with test modal open
+    setLocation('/#subjects');
+    
+    // Create a custom event that the home page can listen for to open test modal
+    const event = new CustomEvent('openTestModal', { 
+      detail: { subjectId: id } 
+    });
+    
+    window.dispatchEvent(event);
   };
 
   return (
@@ -74,7 +87,7 @@ const SubjectInfoCard: React.FC<SubjectInfoProps> = ({ id, name, description, ic
               <Button 
                 variant="default" 
                 className="bg-primary hover:bg-primary/80"
-                onClick={() => setLocation(`/#subjects-${id}`)}
+                onClick={handleStartTest}
               >
                 टेस्ट शुरू करें
               </Button>
@@ -110,13 +123,38 @@ const SubjectInfoCard: React.FC<SubjectInfoProps> = ({ id, name, description, ic
 
 const ChapterListSection: React.FC<{subjectId: string, reducedMotion: boolean}> = ({ subjectId, reducedMotion }) => {
   const subject = subjects.find(s => s.id === subjectId);
+  const [location, setLocation] = useLocation();
+  const [testModalOpen, setTestModalOpen] = useState(false);
+  
   const chapterNames = [
     'अध्याय 1: प्रारंभिक अवधारणाएँ',
     'अध्याय 2: मूलभूत प्रक्रियाएँ',
     'अध्याय 3: परिभाषित संरचनाएँ',
     'अध्याय 4: विश्लेषणात्मक पद्धतियां',
-    'अध्याय 5: व्यावहारिक अनुप्रयोग'
+    'अध्याय 5: व्यावहारिक अनुप्रयोग',
+    'अध्याय 6: प्रगति मूल्यांकन',
+    'अध्याय 7: समस्या समाधान',
+    'अध्याय 8: आगे का अध्ययन',
+    'अध्याय 9: व्यावहारिक उदाहरण',
+    'अध्याय 10: परिचय और समीक्षा'
   ];
+  
+  // Start test handler
+  const handleStartChapterTest = (chapter: string, index: number) => {
+    // Navigate to home page with test modal open
+    setLocation('/#subjects');
+    
+    // Create a custom event that the home page can listen for to open test modal
+    const event = new CustomEvent('openTestModal', { 
+      detail: { 
+        subjectId: subjectId,
+        chapter: chapter,
+        chapterIndex: index + 1
+      } 
+    });
+    
+    window.dispatchEvent(event);
+  };
   
   return (
     <div className="mt-8 bg-spaceMid/50 p-6 rounded-xl">
@@ -132,7 +170,14 @@ const ChapterListSection: React.FC<{subjectId: string, reducedMotion: boolean}> 
           >
             <div className="flex justify-between items-center">
               <span>{chapter}</span>
-              <Button size="sm" variant="outline" className="text-xs">अभ्यास करें</Button>
+              <Button 
+                size="sm" 
+                variant="outline" 
+                className="text-xs"
+                onClick={() => handleStartChapterTest(chapter, idx)}
+              >
+                अभ्यास करें
+              </Button>
             </div>
           </motion.div>
         ))}
