@@ -19,11 +19,15 @@ export interface Trophy {
   status: 'locked' | 'unlocked' | 'in-progress';
 }
 
+export type DifficultyLevel = 'easy' | 'medium' | 'intermediate' | 'hard';
+
 export interface Question {
   id: string;
   text: string;
   options: string[];
   correctAnswer: number;
+  difficulty: DifficultyLevel;
+  explanation?: string;
 }
 
 export interface Test {
@@ -34,6 +38,24 @@ export interface Test {
   icon: string;
   duration: number;
   questions: Question[];
+  difficulty?: DifficultyLevel;
+  generatedBy?: 'system' | 'ai';
+}
+
+export interface UserAnswer {
+  questionId: string;
+  selectedOption: number | null;
+}
+
+export interface TestResult {
+  testId: string;
+  totalQuestions: number;
+  correctAnswers: number;
+  incorrectAnswers: number;
+  unattempted: number;
+  score: number;
+  userAnswers: UserAnswer[];
+  completedAt: Date;
 }
 
 export const subjects: Subject[] = [
@@ -139,32 +161,3 @@ export const trophies: Trophy[] = [
     status: 'locked'
   }
 ];
-
-export const scienceTest: Test = {
-  id: 'science-test-1',
-  subjectId: 'science',
-  title: 'Science Mock Test',
-  chapter: 'Chapter 3: Matter and Materials',
-  icon: 'fa-atom',
-  duration: 30,
-  questions: [
-    {
-      id: 'q1',
-      text: 'Which of the following is NOT a state of matter?',
-      options: ['Solid', 'Liquid', 'Energy', 'Gas'],
-      correctAnswer: 2
-    },
-    {
-      id: 'q2',
-      text: 'What is the basic unit of matter?',
-      options: ['Cell', 'Atom', 'Molecule', 'Compound'],
-      correctAnswer: 1
-    },
-    {
-      id: 'q3',
-      text: 'Which state of matter has a definite shape and volume?',
-      options: ['Solid', 'Liquid', 'Gas', 'Plasma'],
-      correctAnswer: 0
-    }
-  ]
-};

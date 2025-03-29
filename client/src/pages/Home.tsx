@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { subjects, trophies, scienceTest } from '@/lib/data';
+import { subjects, trophies } from '@/lib/data';
+import { scienceTest } from '@/lib/testData';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import SubjectsSection from '@/components/SubjectsSection';
@@ -7,6 +8,7 @@ import TestSampleSection from '@/components/TestSampleSection';
 import RewardsSection from '@/components/RewardsSection';
 import Footer from '@/components/Footer';
 import TestModal from '@/components/TestModal';
+import EnhancedTestModal from '@/components/EnhancedTestModal';
 
 const Home: React.FC = () => {
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -50,12 +52,13 @@ const Home: React.FC = () => {
       
       <Footer />
       
-      {/* Test Modal */}
-      <TestModal 
+      {/* Enhanced Test Modal with adaptive difficulty */}
+      <EnhancedTestModal 
         isOpen={testModalOpen} 
         onClose={() => setTestModalOpen(false)} 
-        test={scienceTest}
+        initialTest={scienceTest}
         reducedMotion={reducedMotion}
+        subjectId={selectedSubjectId || 'science'}
       />
     </div>
   );
