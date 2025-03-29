@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { subjects, trophies } from '@/lib/data';
 import { scienceTest } from '@/lib/testData';
-import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import SubjectsSection from '@/components/SubjectsSection';
 import TestSampleSection from '@/components/TestSampleSection';
@@ -10,21 +9,11 @@ import Footer from '@/components/Footer';
 import AnimatedBackground from '@/components/AnimatedBackground';
 import EnhancedTestModal from '@/components/EnhancedTestModal';
 
-const Home: React.FC = () => {
-  const [reducedMotion, setReducedMotion] = useState(false);
+const Home: React.FC<{reducedMotion: boolean}> = ({ reducedMotion }) => {
   const [testModalOpen, setTestModalOpen] = useState(false);
   const [selectedSubjectId, setSelectedSubjectId] = useState('');
   
-  // Check localStorage for reduced motion preference on component mount
-  useEffect(() => {
-    const storedPreference = localStorage.getItem('reduced-motion') === 'true';
-    setReducedMotion(storedPreference);
-  }, []);
-  
-  // Update localStorage when reducedMotion changes
-  useEffect(() => {
-    localStorage.setItem('reduced-motion', String(reducedMotion));
-  }, [reducedMotion]);
+  // The App component now handles localStorage updates for reducedMotion
   
   const handleStartLearning = () => {
     // Scroll to subjects section
@@ -47,7 +36,7 @@ const Home: React.FC = () => {
         onSelectSubject={handleSelectSubject} 
       />
     
-      <Navbar reducedMotion={reducedMotion} setReducedMotion={setReducedMotion} />
+      {/* Navbar is now handled in the App.tsx Router */}
       
       <main className="relative z-10">
         <HeroSection reducedMotion={reducedMotion} onStartLearning={handleStartLearning} />

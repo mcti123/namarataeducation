@@ -65,19 +65,19 @@ const Navbar: React.FC<NavbarProps> = ({ reducedMotion, setReducedMotion }) => {
                 <span>Home</span>
               </div>
             </Link>
-            <Link href="#subjects">
+            <Link href="/subjects">
               <div className="px-3 py-2 rounded-md font-medium text-spaceWhite hover:bg-spaceMid transition cursor-pointer flex items-center">
                 <Rocket className="mr-1" size={18} />
                 <span>Subjects</span>
               </div>
             </Link>
-            <Link href="#test-sample">
+            <Link href="/progress">
               <div className="px-3 py-2 rounded-md font-medium text-spaceWhite hover:bg-spaceMid transition cursor-pointer flex items-center">
                 <BarChart className="mr-1" size={18} />
                 <span>Progress</span>
               </div>
             </Link>
-            <Link href="#rewards">
+            <Link href="/rewards">
               <div className="px-3 py-2 rounded-md font-medium text-spaceWhite hover:bg-spaceMid transition cursor-pointer flex items-center">
                 <Award className="mr-1" size={18} />
                 <span>Rewards</span>
@@ -145,19 +145,19 @@ const Navbar: React.FC<NavbarProps> = ({ reducedMotion, setReducedMotion }) => {
               <span>Home</span>
             </div>
           </Link>
-          <Link href="#subjects">
+          <Link href="/subjects">
             <div className="flex items-center px-3 py-3 rounded-md text-base font-medium text-spaceWhite hover:bg-spaceMid transition-all cursor-pointer">
               <Rocket className="mr-3" size={18} />
               <span>Subjects</span>
             </div>
           </Link>
-          <Link href="#test-sample">
+          <Link href="/progress">
             <div className="flex items-center px-3 py-3 rounded-md text-base font-medium text-spaceWhite hover:bg-spaceMid transition-all cursor-pointer">
               <BarChart className="mr-3" size={18} />
               <span>Progress</span>
             </div>
           </Link>
-          <Link href="#rewards">
+          <Link href="/rewards">
             <div className="flex items-center px-3 py-3 rounded-md text-base font-medium text-spaceWhite hover:bg-spaceMid transition-all cursor-pointer">
               <Award className="mr-3" size={18} />
               <span>Rewards</span>
