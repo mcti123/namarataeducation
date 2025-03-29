@@ -32,7 +32,10 @@ const SubjectCard: React.FC<SubjectCardProps> = ({ subject, onClick }) => {
   };
 
   return (
-    <div className="relative bg-space border border-spaceMid rounded-xl overflow-hidden transition transform hover:-translate-y-2 duration-300 shadow-xl book-hover">
+    <div 
+      className="relative bg-space border border-spaceMid rounded-xl overflow-hidden transition transform hover:-translate-y-2 duration-300 shadow-xl book-hover"
+      data-subject-id={subject.id}
+    >
       <div className={`absolute top-3 right-3 w-10 h-10 rounded-full ${subject.backgroundColor} flex items-center justify-center`}>
         <i className={`fas ${subject.icon} ${subject.color}`}></i>
       </div>

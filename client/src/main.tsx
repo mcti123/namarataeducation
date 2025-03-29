@@ -43,30 +43,20 @@ customStyles.textContent = `
     animation: trophy-appear 1s forwards;
   }
   
-  /* Float animations */
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-20px); }
+  /* Custom hover effects */
+  .hover-glow:hover {
+    filter: brightness(1.5) drop-shadow(0 0 15px currentColor);
+    transform: scale(1.1);
   }
   
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
+  @keyframes wobble {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
   }
   
-  .animate-float-delayed {
-    animation: float 6s ease-in-out 2s infinite;
-  }
-  
-  .animate-float-slow {
-    animation: float 8s ease-in-out infinite;
-  }
-  
-  .animate-spin-slow {
-    animation: spin 8s linear infinite;
-  }
-  
-  .animate-bounce-slow {
-    animation: bounce 3s infinite;
+  .hover-wobble:hover {
+    animation: wobble 0.5s ease-in-out;
   }
   
   /* Custom fonts */

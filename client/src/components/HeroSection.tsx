@@ -1,116 +1,215 @@
-import React, { useState, useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Text3D, Stars, PerspectiveCamera } from '@react-three/drei';
-import { Vector3 } from 'three';
-import FloatingObject from './FloatingObject';
+import React from 'react';
 
 interface HeroSectionProps {
   reducedMotion: boolean;
   onStartLearning: () => void;
 }
 
-const HeroCanvas: React.FC<{ reducedMotion: boolean }> = ({ reducedMotion }) => {
+// CSS based floating objects instead of Three.js
+const CSSFloatingObject: React.FC<{
+  type: string;
+  color: string;
+  position: string;
+  size: string;
+  animationClass: string;
+  reducedMotion: boolean;
+  onClick?: () => void;
+  subjectId?: string;
+  tooltip?: string;
+}> = ({ type, color, position, size, animationClass, reducedMotion, onClick, subjectId, tooltip }) => {
+  // Determine which icon to use based on type
+  let icon = '';
+  switch (type) {
+    case 'book':
+      icon = 'fa-book';
+      break;
+    case 'pencil':
+      icon = 'fa-pencil';
+      break;
+    case 'planet':
+      icon = 'fa-globe';
+      break;
+    case 'rocket':
+      icon = 'fa-rocket';
+      break;
+    case 'math':
+      icon = 'fa-square-root-variable';
+      break;
+    default:
+      icon = 'fa-star';
+  }
+
   return (
-    <>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[10, 10, 5]} intensity={1} />
-      <Stars 
-        radius={100} 
-        depth={50} 
-        count={5000} 
-        factor={4} 
-        saturation={0} 
-        fade 
-        speed={reducedMotion ? 0 : 1}
-      />
-      
-      {/* Math Book */}
-      <FloatingObject 
-        position={[-4, 0, -5]} 
-        rotation={[0.2, 0.3, 0.1]} 
-        scale={0.8} 
-        color="#EC4899" 
-        objectType="book" 
-        speed={1.5} 
-        amplitude={0.7}
-        reducedMotion={reducedMotion}
-      />
-      
-      {/* Science Book */}
-      <FloatingObject 
-        position={[4, 1, -3]} 
-        rotation={[-0.1, -0.3, 0.1]} 
-        scale={0.9} 
-        color="#10B981" 
-        objectType="book" 
-        speed={1.2} 
-        amplitude={0.6}
-        reducedMotion={reducedMotion}
-      />
-      
-      {/* Pencil */}
-      <FloatingObject 
-        position={[-2, -1, -2]} 
-        rotation={[0.5, 0, 0.5]} 
-        scale={0.5} 
-        color="#FFBB00" 
-        objectType="pencil" 
-        speed={1.3} 
-        amplitude={0.8}
-        reducedMotion={reducedMotion}
-      />
-      
-      {/* Planet */}
-      <FloatingObject 
-        position={[3, -1.5, -6]} 
-        scale={1.2} 
-        color="#6366F1" 
-        objectType="planet" 
-        speed={0.8} 
-        amplitude={0.4}
-        reducedMotion={reducedMotion}
-      />
-      
-      {/* Rocket */}
-      <FloatingObject 
-        position={[-3, 3, -4]} 
-        rotation={[0.2, 0, 0.1]} 
-        scale={0.6} 
-        color="#F43F5E" 
-        objectType="rocket" 
-        speed={2} 
-        amplitude={1}
-        reducedMotion={reducedMotion}
-      />
-      
-      {/* Floating equation */}
-      <group position={[0, 2, -8]} rotation={[0, 0, 0]}>
-        <Text3D
-          font="/fonts/Baloo_2_Regular.json"
-          size={0.5}
-          height={0.1}
-          curveSegments={12}
-        >
-          E=mc²
-          <meshStandardMaterial color="#6366F1" emissive="#6366F1" emissiveIntensity={0.5} />
-        </Text3D>
-      </group>
-    </>
+    <div className="group relative">
+      <div 
+        className={`absolute ${position} ${reducedMotion ? '' : animationClass} transform-gpu hover-glow transition-all duration-300 cursor-pointer`}
+        style={{ 
+          color: color,
+          fontSize: size,
+          opacity: 0.8,
+          filter: `drop-shadow(0 0 10px ${color})`,
+        }}
+        onClick={onClick}
+        data-subject-id={subjectId}
+        role="button"
+        aria-label={`Interactive ${type} object${tooltip ? `: ${tooltip}` : ''}`}
+        tabIndex={0}
+      >
+        <i className={`fas ${icon}`}></i>
+        
+        {/* Tooltip */}
+        {tooltip && (
+          <div className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black bg-opacity-80 text-white text-xs rounded py-1 px-2 pointer-events-none whitespace-nowrap z-50"
+               style={{ 
+                 bottom: '100%', 
+                 left: '50%', 
+                 transform: 'translateX(-50%)', 
+                 marginBottom: '8px'
+               }}>
+            {tooltip}
+            {/* Tooltip arrow */}
+            <div className="tooltip-arrow absolute h-2 w-2 bg-black bg-opacity-80 rotate-45"
+                 style={{ 
+                   bottom: '-4px', 
+                   left: '50%', 
+                   transform: 'translateX(-50%)' 
+                 }}>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// Stars background using plain HTML/CSS
+const StarryBackground: React.FC<{ count: number; reducedMotion: boolean }> = ({ count, reducedMotion }) => {
+  return (
+    <div className="absolute inset-0 overflow-hidden z-0">
+      {[...Array(count)].map((_, i) => {
+        const size = Math.random() * 0.2 + 0.1; // Random size between 0.1 and 0.3rem
+        const top = Math.random() * 100;
+        const left = Math.random() * 100;
+        const delay = Math.random() * 5;
+        const duration = Math.random() * 3 + 3;
+        
+        return (
+          <div 
+            key={i}
+            className={`absolute rounded-full bg-white ${reducedMotion ? '' : 'animate-pulse'}`}
+            style={{
+              top: `${top}%`,
+              left: `${left}%`,
+              width: `${size}rem`,
+              height: `${size}rem`,
+              opacity: Math.random() * 0.8 + 0.2,
+              animationDelay: `${delay}s`,
+              animationDuration: `${duration}s`
+            }}
+          />
+        );
+      })}
+    </div>
   );
 };
 
 const HeroSection: React.FC<HeroSectionProps> = ({ reducedMotion, onStartLearning }) => {
+  // Create a handler for the floating object clicks
+  const handleFloatingObjectClick = (subjectId: string) => {
+    // Scroll to the subjects section
+    const subjectsSection = document.getElementById('subjects');
+    if (subjectsSection) {
+      subjectsSection.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' });
+    }
+    
+    // Highlight the specific subject card if it exists
+    setTimeout(() => {
+      const subjectCard = document.querySelector(`[data-subject-id="${subjectId}"]`);
+      if (subjectCard) {
+        subjectCard.classList.add('ring', 'ring-primary', 'ring-opacity-70');
+        setTimeout(() => {
+          subjectCard.classList.remove('ring', 'ring-primary', 'ring-opacity-70');
+        }, 2000);
+      }
+    }, reducedMotion ? 0 : 500);
+  };
+  
   return (
-    <section className="relative pt-20 min-h-screen flex items-center">
+    <section className="relative pt-20 min-h-screen flex items-center overflow-hidden">
+      {/* Starry Background */}
+      <StarryBackground count={100} reducedMotion={reducedMotion} />
+      
+      {/* Floating Objects */}
       <div className="absolute inset-0 z-0">
-        <Canvas>
-          <PerspectiveCamera makeDefault position={[0, 0, 10]} />
-          <HeroCanvas reducedMotion={reducedMotion} />
-        </Canvas>
+        <CSSFloatingObject 
+          type="book" 
+          color="#EC4899" 
+          position="top-1/4 left-1/4" 
+          size="4rem" 
+          animationClass="animate-float" 
+          reducedMotion={reducedMotion}
+          onClick={() => handleFloatingObjectClick('math')}
+          subjectId="math"
+          tooltip="Math Practice Tests"
+        />
+        <CSSFloatingObject 
+          type="book" 
+          color="#10B981" 
+          position="top-1/3 right-1/3" 
+          size="3.5rem" 
+          animationClass="animate-float-delayed" 
+          reducedMotion={reducedMotion}
+          onClick={() => handleFloatingObjectClick('science')}
+          subjectId="science"
+          tooltip="Science Practice Tests"
+        />
+        <CSSFloatingObject 
+          type="pencil" 
+          color="#FFBB00" 
+          position="bottom-1/4 left-1/3" 
+          size="3rem" 
+          animationClass="animate-float-slow" 
+          reducedMotion={reducedMotion} 
+          onClick={() => handleFloatingObjectClick('english')}
+          subjectId="english"
+          tooltip="English Practice Tests"
+        />
+        <CSSFloatingObject 
+          type="planet" 
+          color="#6366F1" 
+          position="bottom-1/3 right-1/4" 
+          size="5rem" 
+          animationClass="animate-spin-slow" 
+          reducedMotion={reducedMotion}
+          onClick={() => handleFloatingObjectClick('social-studies')}
+          subjectId="social-studies"
+          tooltip="Social Studies Tests"
+        />
+        <CSSFloatingObject 
+          type="rocket" 
+          color="#F43F5E" 
+          position="top-1/5 right-1/5" 
+          size="3rem" 
+          animationClass="animate-float" 
+          reducedMotion={reducedMotion}
+          onClick={onStartLearning}
+          tooltip="Start Your Learning Journey"
+        />
+        <CSSFloatingObject 
+          type="math" 
+          color="#FFFFFF" 
+          position="top-2/5 left-1/2 transform -translate-x-1/2" 
+          size="2.5rem" 
+          animationClass="animate-float-slow" 
+          reducedMotion={reducedMotion}
+          onClick={() => handleFloatingObjectClick('math')}
+          subjectId="math"
+          tooltip="Math Formulas"
+        />
       </div>
       
+      {/* Hero Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10">
-        {/* Hero Content */}
         <div className="text-center">
           <h1 className="text-5xl md:text-7xl font-baloo font-bold tracking-tight">
             <span className="inline-block animate-float text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">

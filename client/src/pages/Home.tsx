@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { subjects, trophies, scienceTest } from '@/lib/data';
-import ThreeCanvas from '@/components/ThreeCanvas';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import SubjectsSection from '@/components/SubjectsSection';
@@ -40,9 +39,6 @@ const Home: React.FC = () => {
   
   return (
     <div className="min-h-screen bg-space">
-      {/* 3D Background Canvas is temporarily removed due to errors */}
-      {/* <ThreeCanvas reducedMotion={reducedMotion} /> */}
-      
       <Navbar reducedMotion={reducedMotion} setReducedMotion={setReducedMotion} />
       
       <main>
