@@ -1,48 +1,113 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import FloatingObject from './FloatingObject';
+import { subjects } from '@/lib/data';
 
 interface AnimatedBackgroundProps {
   reducedMotion: boolean;
   onSelectSubject: (subjectId: string) => void;
 }
 
-const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
-  reducedMotion,
-  onSelectSubject
+const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({ 
+  reducedMotion, 
+  onSelectSubject 
 }) => {
-  const floatingObjects = [
-    { type: 'book', position: [15, 30, 1], scale: 1.2, rotation: [10, 20, -5], subjectId: 'science' },
-    { type: 'book', position: [78, 40, 1], scale: 1.3, rotation: [-5, 15, 10], subjectId: 'math' },
-    { type: 'book', position: [28, 70, 1], scale: 1.1, rotation: [5, -10, 5], subjectId: 'english' },
-    { type: 'book', position: [85, 75, 1], scale: 1, rotation: [0, 5, -10], subjectId: 'social' },
-    { type: 'notebook', position: [50, 20, 2], scale: 0.9, rotation: [0, 0, 5], subjectId: 'hindi' },
-    { type: 'notebook', position: [22, 50, 2], scale: 0.8, rotation: [5, 10, 0], subjectId: 'sanskrit' },
-    { type: 'pencil', position: [40, 35, 1], scale: 0.7, rotation: [0, 0, 45] },
-    { type: 'pencil', position: [65, 55, 1], scale: 0.8, rotation: [0, 0, -30] },
-    { type: 'pencil', position: [35, 85, 1], scale: 0.6, rotation: [0, 0, 20] },
-    { type: 'planet', position: [10, 10, 3], scale: 1.5, rotation: [0, 0, 0] },
-    { type: 'planet', position: [90, 20, 3], scale: 1.2, rotation: [0, 0, 0] },
-    { type: 'rocket', position: [18, 85, 2], scale: 0.9, rotation: [0, 0, -45] },
-    { type: 'rocket', position: [75, 15, 2], scale: 0.7, rotation: [0, 0, 30] },
-  ];
+  const [objects, setObjects] = useState<React.ReactNode[]>([]);
+  const subjectData = subjects;
+
+  useEffect(() => {
+    // Generate floating objects based on subjects and some decorative objects
+    const generateObjects = () => {
+      const floatingObjects: React.ReactNode[] = [];
+      
+      // Add subject-specific objects that trigger tests when clicked
+      subjectData.forEach((subject, index) => {
+        const xPos = Math.sin(index * (Math.PI * 2 / subjectData.length)) * 15;
+        const zPos = Math.cos(index * (Math.PI * 2 / subjectData.length)) * 15;
+        
+        // Use appropriate object types for different subjects
+        let objectType: 'book' | 'notebook' | 'pencil' | 'planet' | 'rocket' = 'notebook';
+        
+        switch(subject.id) {
+          case 'math':
+            objectType = 'book';
+            break;
+          case 'science':
+            objectType = 'planet';
+            break;
+          case 'english':
+            objectType = 'book';
+            break;
+          default:
+            objectType = 'notebook';
+        }
+        
+        floatingObjects.push(
+          <FloatingObject
+            key={`subject-${subject.id}`}
+            position={[xPos, Math.random() * 2 + 2, zPos]}
+            rotation={[Math.random() * 0.3, Math.random() * 0.3, Math.random() * 0.3]}
+            scale={1.2}
+            color={subject.color}
+            objectType={objectType}
+            speed={0.5 + Math.random() * 0.3}
+            amplitude={0.3 + Math.random() * 0.2}
+            onClick={() => onSelectSubject(subject.id)}
+            reducedMotion={reducedMotion}
+            subjectId={subject.id}
+          />
+        );
+      });
+      
+      // Add decorative objects
+      const decorativeCount = 15;
+      for (let i = 0; i < decorativeCount; i++) {
+        const radius = 20 + Math.random() * 15;
+        const angle = Math.random() * Math.PI * 2;
+        const xPos = Math.sin(angle) * radius;
+        const zPos = Math.cos(angle) * radius;
+        
+        // Randomly select object type
+        const objectTypes: ('book' | 'notebook' | 'pencil' | 'planet' | 'rocket')[] = 
+          ['pencil', 'rocket', 'planet', 'notebook', 'book'];
+          
+        const randomType = objectTypes[Math.floor(Math.random() * objectTypes.length)];
+        const colors = ['#FF5733', '#33FF57', '#3357FF', '#F3FF33', '#FF33F3', '#33FFF3'];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        floatingObjects.push(
+          <FloatingObject
+            key={`decorative-${i}`}
+            position={[xPos, Math.random() * 10 - 5, zPos]}
+            rotation={[Math.random(), Math.random(), Math.random()]}
+            scale={0.8 + Math.random() * 0.4}
+            color={randomColor}
+            objectType={randomType}
+            speed={0.2 + Math.random() * 0.8}
+            amplitude={0.4 + Math.random() * 0.6}
+            reducedMotion={reducedMotion}
+          />
+        );
+      }
+      
+      setObjects(floatingObjects);
+    };
+    
+    generateObjects();
+  }, [reducedMotion, onSelectSubject, subjectData]);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-      {floatingObjects.map((obj, index) => (
-        <FloatingObject
-          key={index}
-          objectType={obj.type as any}
-          position={obj.position as [number, number, number]}
-          rotation={obj.rotation as [number, number, number]}
-          scale={obj.scale}
-          reducedMotion={reducedMotion}
-          onClick={obj.subjectId ? () => {
-            onSelectSubject(obj.subjectId!);
-            return false;
-          } : undefined}
-          subjectId={obj.subjectId}
-        />
-      ))}
+    <div className="animated-background fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+      <div className="stars absolute top-0 left-0 w-full h-full">
+        {/* Parallax star layers */}
+        <div className="stars-layer stars-small"></div>
+        <div className="stars-layer stars-medium"></div>
+        <div className="stars-layer stars-large"></div>
+      </div>
+      
+      {/* Floating 3D Objects */}
+      <div className="floating-objects pointer-events-auto">
+        {objects}
+      </div>
     </div>
   );
 };

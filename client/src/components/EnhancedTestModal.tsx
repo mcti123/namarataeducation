@@ -27,6 +27,16 @@ import {
   scienceHardQuestions,
   generateTestByDifficulty
 } from '@/lib/testData';
+import { 
+  generateSubjectTest, 
+  getChaptersForSubject,
+  mathChapters,
+  scienceChapters,
+  englishChapters,
+  hindiChapters,
+  socialChapters,
+  sanskritChapters
+} from '@/lib/subjectData';
 import ConfettiEffect from './ConfettiEffect';
 import TrophyAnimation from './TrophyAnimation';
 
@@ -56,30 +66,32 @@ const EnhancedTestModal: React.FC<EnhancedTestModalProps> = ({
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
   const [showTrophy, setShowTrophy] = useState<boolean>(false);
   const [difficulty, setDifficulty] = useState<DifficultyLevel>('easy');
-  const [availableChapters, setAvailableChapters] = useState<string[]>([
-    'Introduction to Science', 
-    'The Living World', 
-    'Matter and Materials', 
-    'Motion and Forces', 
-    'Energy',
-    'Earth and Space',
-    'Human Body Systems',
-    'Environment and Ecosystems'
-  ]);
+  const [availableChapters, setAvailableChapters] = useState<string[]>([]);
   const [selectedChapter, setSelectedChapter] = useState<string | null>(null);
+  
+  // Load chapters based on subject ID
+  useEffect(() => {
+    // Get the appropriate chapters for the selected subject
+    const subjectChapters = getChaptersForSubject(subjectId);
+    setAvailableChapters(subjectChapters);
+    
+    // Create initial test for this subject
+    const initialSubjectTest = generateSubjectTest(subjectId, difficulty);
+    setCurrentTest(initialSubjectTest);
+  }, [subjectId]);
   
   // Generate a new test with different questions based on difficulty
   const generateNewTest = (difficulty: DifficultyLevel, chapter?: string) => {
-    const newTest = generateTestByDifficulty(difficulty, subjectId);
+    let newTest;
     
     if (chapter) {
-      newTest.chapter = chapter;
-      newTest.title = `${chapter} Test`;
-      
-      // Filter questions to simulate chapter-specific questions
-      // In a real app, we would have chapter-specific questions in the database
-      const shuffledQuestions = [...newTest.questions].sort(() => Math.random() - 0.5);
-      newTest.questions = shuffledQuestions.slice(0, 5); // Limit to 5 questions per chapter
+      // Find the chapter index (removing the "Chapter X: " prefix if needed)
+      const chapterIndex = availableChapters.findIndex(c => c === chapter);
+      // Generate a chapter-specific test
+      newTest = generateSubjectTest(subjectId, difficulty, (chapterIndex + 1).toString());
+    } else {
+      // Generate a full subject test
+      newTest = generateSubjectTest(subjectId, difficulty);
     }
     
     setCurrentTest(newTest);
@@ -378,11 +390,18 @@ const EnhancedTestModal: React.FC<EnhancedTestModalProps> = ({
                 {availableChapters.map((chapter, index) => (
                   <div 
                     key={index} 
-                    className="p-3 border rounded-lg hover:bg-muted/50 cursor-pointer flex justify-between items-center group"
-                    onClick={() => startChapterTest(chapter)}
+                    className="p-3 border rounded-lg hover:bg-muted/50 flex justify-between items-center group"
                   >
-                    <span>{chapter}</span>
-                    <Button size="sm" className="opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="cursor-text">{chapter}</span>
+                    <Button 
+                      size="sm" 
+                      className="transition-opacity"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        startChapterTest(chapter);
+                        startTest();
+                      }}
+                    >
                       Take Test
                     </Button>
                   </div>
