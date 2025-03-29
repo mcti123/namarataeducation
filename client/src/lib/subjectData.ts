@@ -7,6 +7,565 @@ import {
   scienceHardQuestions 
 } from './testData';
 
+// Sanskrit questions in different difficulty levels
+export const sanskritEasyQuestions: Question[] = [
+  {
+    id: "sanskrit-easy-1",
+    text: "अहम् ______ छात्रः अस्मि।",
+    options: ["एकः", "एका", "एकम्", "एकाः"],
+    correctAnswer: 0,
+    difficulty: "easy",
+    explanation: "पुल्लिंग एकवचन में 'एकः' का प्रयोग होता है।"
+  },
+  {
+    id: "sanskrit-easy-2",
+    text: "'फलम्' शब्द का लिंग क्या है?",
+    options: ["पुल्लिंग", "स्त्रीलिंग", "नपुंसकलिंग", "कोई नहीं"],
+    correctAnswer: 2,
+    difficulty: "easy",
+    explanation: "'फलम्' नपुंसकलिंग शब्द है।"
+  },
+  {
+    id: "sanskrit-easy-3",
+    text: "'पठति' क्रिया का अर्थ है",
+    options: ["पढ़ता है", "खेलता है", "चलता है", "हँसता है"],
+    correctAnswer: 0,
+    difficulty: "easy",
+    explanation: "'पठति' का अर्थ है 'पढ़ता है'।"
+  },
+  {
+    id: "sanskrit-easy-4",
+    text: "'विद्यालयः' का अर्थ है",
+    options: ["घर", "विद्यालय", "बाज़ार", "उद्यान"],
+    correctAnswer: 1,
+    difficulty: "easy",
+    explanation: "'विद्यालयः' का अर्थ है 'विद्यालय' या 'स्कूल'।"
+  },
+  {
+    id: "sanskrit-easy-5",
+    text: "'अहम्' का अर्थ है",
+    options: ["मैं", "तुम", "वह", "हम"],
+    correctAnswer: 0,
+    difficulty: "easy",
+    explanation: "'अहम्' का अर्थ है 'मैं'।"
+  }
+];
+
+export const sanskritMediumQuestions: Question[] = [
+  {
+    id: "sanskrit-medium-1",
+    text: "निम्न में से कौन सा 'स्त्री' शब्द का बहुवचन रूप है?",
+    options: ["स्त्री", "स्त्रियः", "स्त्रीभिः", "स्त्रीणाम्"],
+    correctAnswer: 1,
+    difficulty: "medium",
+    explanation: "'स्त्रियः' 'स्त्री' शब्द का बहुवचन प्रथमा विभक्ति रूप है।"
+  },
+  {
+    id: "sanskrit-medium-2",
+    text: "'गच्छामि' में कौन सा पुरुष है?",
+    options: ["प्रथम पुरुष", "द्वितीय पुरुष", "उत्तम पुरुष", "कोई नहीं"],
+    correctAnswer: 2,
+    difficulty: "medium",
+    explanation: "'गच्छामि' में उत्तम पुरुष (First person) है।"
+  },
+  {
+    id: "sanskrit-medium-3",
+    text: "'वृक्षः' शब्द का पञ्चमी विभक्ति एकवचन रूप है",
+    options: ["वृक्षात्", "वृक्षस्य", "वृक्षे", "वृक्षम्"],
+    correctAnswer: 0,
+    difficulty: "medium",
+    explanation: "'वृक्षात्' 'वृक्षः' शब्द का पञ्चमी विभक्ति एकवचन रूप है।"
+  },
+  {
+    id: "sanskrit-medium-4",
+    text: "'बालिका' शब्द का प्रथमा बहुवचन रूप है",
+    options: ["बालिका", "बालिकाः", "बालिकाम्", "बालिकायाः"],
+    correctAnswer: 1,
+    difficulty: "medium",
+    explanation: "'बालिकाः' 'बालिका' शब्द का प्रथमा बहुवचन रूप है।"
+  },
+  {
+    id: "sanskrit-medium-5",
+    text: "संस्कृत में 'पुस्तकालय' के लिए क्या शब्द है?",
+    options: ["विद्यालयः", "पुस्तकालयः", "ग्रन्थालयः", "क्रीडाङ्गणम्"],
+    correctAnswer: 2,
+    difficulty: "medium",
+    explanation: "संस्कृत में 'पुस्तकालय' के लिए 'ग्रन्थालयः' शब्द का प्रयोग होता है।"
+  }
+];
+
+export const sanskritIntermediateQuestions: Question[] = [
+  {
+    id: "sanskrit-intermediate-1",
+    text: "निम्न में से शुद्ध वाक्य कौन सा है?",
+    options: [
+      "बालकः विद्यालयं गच्छति।", 
+      "बालकः विद्यालये गच्छति।", 
+      "बालकः विद्यालय गच्छति।", 
+      "बालकः विद्यालयः गच्छति।"
+    ],
+    correctAnswer: 0,
+    difficulty: "intermediate",
+    explanation: "'बालकः विद्यालयं गच्छति।' शुद्ध वाक्य है, जिसमें द्वितीया विभक्ति का प्रयोग सही है।"
+  },
+  {
+    id: "sanskrit-intermediate-2",
+    text: "'धातु' शब्द का अर्थ है",
+    options: ["संज्ञा", "क्रिया का मूल रूप", "विशेषण", "सर्वनाम"],
+    correctAnswer: 1,
+    difficulty: "intermediate",
+    explanation: "'धातु' शब्द का अर्थ है 'क्रिया का मूल रूप' जैसे पठ्, गम् आदि।"
+  },
+  {
+    id: "sanskrit-intermediate-3",
+    text: "निम्न में से कौन सा सही वाक्य है?",
+    options: [
+      "अहं पुस्तकं पठामि।", 
+      "अहं पुस्तकं पठसि।", 
+      "अहं पुस्तकं पठति।", 
+      "अहं पुस्तकं पठथ।"
+    ],
+    correctAnswer: 0,
+    difficulty: "intermediate",
+    explanation: "'अहं पुस्तकं पठामि।' सही वाक्य है जिसमें 'अहम्' के साथ 'पठामि' (उत्तम पुरुष एकवचन) का प्रयोग सही है।"
+  },
+  {
+    id: "sanskrit-intermediate-4",
+    text: "'रामः वनं गच्छति।' वाक्य में कर्ता कौन है?",
+    options: ["रामः", "वनम्", "गच्छति", "कोई नहीं"],
+    correctAnswer: 0,
+    difficulty: "intermediate",
+    explanation: "'रामः वनं गच्छति।' वाक्य में 'रामः' कर्ता है।"
+  },
+  {
+    id: "sanskrit-intermediate-5",
+    text: "'त्वं कुत्र गच्छसि?' वाक्य में क्या पूछा जा रहा है?",
+    options: ["तुम क्या करते हो?", "तुम कहाँ जाते हो?", "तुम कब जाते हो?", "तुम क्यों जाते हो?"],
+    correctAnswer: 1,
+    difficulty: "intermediate",
+    explanation: "'त्वं कुत्र गच्छसि?' वाक्य में 'तुम कहाँ जाते हो?' पूछा जा रहा है।"
+  }
+];
+
+export const sanskritHardQuestions: Question[] = [
+  {
+    id: "sanskrit-hard-1",
+    text: "निम्न श्लोक में 'वसुधा' शब्द का अर्थ क्या है? 'अयं निजः परो वेति गणना लघुचेतसाम्। उदारचरितानां तु वसुधैव कुटुम्बकम्॥'",
+    options: ["कुटुंब", "पृथ्वी", "धन", "समाज"],
+    correctAnswer: 1,
+    difficulty: "hard",
+    explanation: "इस श्लोक में 'वसुधा' शब्द का अर्थ 'पृथ्वी' है, अर्थात 'पूरी पृथ्वी ही परिवार है'।"
+  },
+  {
+    id: "sanskrit-hard-2",
+    text: "निम्न में से कौन सा सन्धि-विच्छेद सही है? 'महेश्वरः'",
+    options: ["महा + ईश्वरः", "महा + इश्वरः", "महा + एश्वरः", "महा + श्वरः"],
+    correctAnswer: 0,
+    difficulty: "hard",
+    explanation: "'महेश्वरः' का सन्धि-विच्छेद 'महा + ईश्वरः' है।"
+  },
+  {
+    id: "sanskrit-hard-3",
+    text: "'सः वनम् अगच्छत्।' वाक्य का अनुवाद है",
+    options: ["वह वन जाता है।", "वह वन जाएगा।", "वह वन गया।", "वह वन जाना चाहता है।"],
+    correctAnswer: 2,
+    difficulty: "hard",
+    explanation: "'सः वनम् अगच्छत्।' वाक्य का अनुवाद 'वह वन गया।' होता है।"
+  },
+  {
+    id: "sanskrit-hard-4",
+    text: "'अनुवादः' शब्द में कौन सा उपसर्ग है?",
+    options: ["अनु", "अन", "अनुवा", "इनमें से कोई नहीं"],
+    correctAnswer: 0,
+    difficulty: "hard",
+    explanation: "'अनुवादः' शब्द में 'अनु' उपसर्ग है।"
+  },
+  {
+    id: "sanskrit-hard-5",
+    text: "निम्न में से 'आत्मनेपदी' धातु कौन सी है?",
+    options: ["पठ्", "कृ", "लभ्", "इनमें से कोई नहीं"],
+    correctAnswer: 2,
+    difficulty: "hard",
+    explanation: "'लभ्' 'आत्मनेपदी' धातु है।"
+  }
+];
+
+// Hindi questions in different difficulty levels
+export const hindiEasyQuestions: Question[] = [
+  {
+    id: "hindi-easy-1",
+    text: "'वह चिड़िया जो' कविता के कवि कौन हैं?",
+    options: ["सुमित्रानंदन पंत", "महादेवी वर्मा", "रामधारी सिंह 'दिनकर'", "जयशंकर प्रसाद"],
+    correctAnswer: 0,
+    difficulty: "easy",
+    explanation: "'वह चिड़िया जो' कविता के कवि सुमित्रानंदन पंत हैं।"
+  },
+  {
+    id: "hindi-easy-2",
+    text: "'बचपन' पाठ में लेखक किसके बचपन का वर्णन करते हैं?",
+    options: ["अपने", "अपने मित्र के", "विश्वनाथ प्रसाद तिवारी के", "किसी अनजान बच्चे के"],
+    correctAnswer: 0,
+    difficulty: "easy",
+    explanation: "'बचपन' पाठ में लेखक अपने बचपन का वर्णन करते हैं।"
+  },
+  {
+    id: "hindi-easy-3",
+    text: "'नादान दोस्त' कहानी में बच्चों ने गिलहरी के बच्चों को क्या खिलाया?",
+    options: ["दूध", "फल", "रोटी के टुकड़े", "मिठाई"],
+    correctAnswer: 2,
+    difficulty: "easy",
+    explanation: "'नादान दोस्त' कहानी में बच्चों ने गिलहरी के बच्चों को रोटी के टुकड़े खिलाए।"
+  },
+  {
+    id: "hindi-easy-4",
+    text: "'चाँद से थोड़ी सी गप्पें' पाठ में लेखक चाँद से क्या करते हैं?",
+    options: ["बातें", "झगड़ा", "मित्रता", "गाना"],
+    correctAnswer: 0,
+    difficulty: "easy",
+    explanation: "'चाँद से थोड़ी सी गप्पें' पाठ में लेखक चाँद से बातें करते हैं।"
+  },
+  {
+    id: "hindi-easy-5",
+    text: "'साथी हाथ बढ़ाना' कविता का मूल भाव क्या है?",
+    options: ["परिश्रम का महत्व", "मित्रता", "सहयोग और एकता", "प्रेम और करुणा"],
+    correctAnswer: 2,
+    difficulty: "easy",
+    explanation: "'साथी हाथ बढ़ाना' कविता का मूल भाव सहयोग और एकता है।"
+  }
+];
+
+export const hindiMediumQuestions: Question[] = [
+  {
+    id: "hindi-medium-1",
+    text: "'चाँद से थोड़ी सी गप्पें' पाठ के लेखक कौन हैं?",
+    options: ["कृष्णा सोबती", "विष्णु खरे", "गुरदयाल सिंह", "प्रेमचंद"],
+    correctAnswer: 1,
+    difficulty: "medium",
+    explanation: "'चाँद से थोड़ी सी गप्पें' पाठ के लेखक विष्णु खरे हैं।"
+  },
+  {
+    id: "hindi-medium-2",
+    text: "'अक्षरों का महत्व' पाठ में किसके महत्व पर प्रकाश डाला गया है?",
+    options: ["पुस्तकों के", "भाषा के", "लिपि के", "शब्दों के"],
+    correctAnswer: 2,
+    difficulty: "medium",
+    explanation: "'अक्षरों का महत्व' पाठ में लिपि के महत्व पर प्रकाश डाला गया है।"
+  },
+  {
+    id: "hindi-medium-3",
+    text: "'झाँसी की रानी' कविता किनके द्वारा लिखी गई है?",
+    options: ["महादेवी वर्मा", "सुभद्रा कुमारी चौहान", "मैथिलीशरण गुप्त", "जयशंकर प्रसाद"],
+    correctAnswer: 1,
+    difficulty: "medium",
+    explanation: "'झाँसी की रानी' कविता सुभद्रा कुमारी चौहान द्वारा लिखी गई है।"
+  },
+  {
+    id: "hindi-medium-4",
+    text: "'टिकट-अलबम' कहानी में मुख्य पात्र का क्या शौक है?",
+    options: ["चित्रकारी", "टिकट इकट्ठा करना", "संगीत", "खेलकूद"],
+    correctAnswer: 1,
+    difficulty: "medium",
+    explanation: "'टिकट-अलबम' कहानी में मुख्य पात्र का शौक टिकट इकट्ठा करना है।"
+  },
+  {
+    id: "hindi-medium-5",
+    text: "'नादान दोस्त' कहानी का मूल संदेश क्या है?",
+    options: ["मित्रता का महत्व", "प्रकृति की सुंदरता", "अनजाने में की गई गलती", "परिश्रम का महत्व"],
+    correctAnswer: 2,
+    difficulty: "medium",
+    explanation: "'नादान दोस्त' कहानी का मूल संदेश अनजाने में की गई गलती और उसके परिणाम हैं।"
+  }
+];
+
+export const hindiIntermediateQuestions: Question[] = [
+  {
+    id: "hindi-intermediate-1",
+    text: "'वह चिड़िया जो' कविता में चिड़िया के माध्यम से किस भाव को व्यक्त किया गया है?",
+    options: ["स्वतंत्रता का महत्व", "प्रकृति प्रेम", "परिश्रम का महत्व", "उपरोक्त सभी"],
+    correctAnswer: 3,
+    difficulty: "intermediate",
+    explanation: "'वह चिड़िया जो' कविता में चिड़िया के माध्यम से स्वतंत्रता, प्रकृति प्रेम और परिश्रम तीनों भावों को व्यक्त किया गया है।"
+  },
+  {
+    id: "hindi-intermediate-2",
+    text: "'जो देखकर भी नहीं देखते' पाठ किस विषय पर केंद्रित है?",
+    options: ["अंधविश्वास", "सामाजिक भेदभाव", "संवेदनहीनता", "प्राकृतिक आपदाएँ"],
+    correctAnswer: 2,
+    difficulty: "intermediate",
+    explanation: "'जो देखकर भी नहीं देखते' पाठ संवेदनहीनता और लोगों की उदासीनता पर केंद्रित है।"
+  },
+  {
+    id: "hindi-intermediate-3",
+    text: "'संसार पुस्तक है' पाठ का मुख्य विचार क्या है?",
+    options: ["पुस्तकों का महत्व", "अनुभव से सीखना", "विद्या का महत्व", "पाठशाला का महत्व"],
+    correctAnswer: 1,
+    difficulty: "intermediate",
+    explanation: "'संसार पुस्तक है' पाठ का मुख्य विचार यह है कि अनुभव से सीखना महत्वपूर्ण है।"
+  },
+  {
+    id: "hindi-intermediate-4",
+    text: "'मैं सबसे छोटी होऊँ' कविता में कवयित्री क्या इच्छा व्यक्त करती है?",
+    options: ["छोटी होकर सबका प्यार पाने की", "छोटी होकर निर्दोष रहने की", "छोटी होकर मासूम बनने की", "छोटी होकर परिवार के नज़दीक रहने की"],
+    correctAnswer: 0,
+    difficulty: "intermediate",
+    explanation: "'मैं सबसे छोटी होऊँ' कविता में कवयित्री छोटी होकर सबका प्यार पाने की इच्छा व्यक्त करती है।"
+  },
+  {
+    id: "hindi-intermediate-5",
+    text: "'पार नज़र के' पाठ में लेखक किस पर बल देता है?",
+    options: ["विज्ञान की प्रगति", "आधुनिक तकनीक", "दृष्टि की सीमाएँ", "कल्पना की शक्ति"],
+    correctAnswer: 3,
+    difficulty: "intermediate",
+    explanation: "'पार नज़र के' पाठ में लेखक कल्पना की शक्ति पर बल देता है।"
+  }
+];
+
+export const hindiHardQuestions: Question[] = [
+  {
+    id: "hindi-hard-1",
+    text: "'साँस-साँस में बाँस' पाठ में बांस की कौन-सी विशेषता पर प्रकाश डाला गया है?",
+    options: ["लचीलापन", "बहुआयामी उपयोगिता", "सौंदर्य", "मजबूती"],
+    correctAnswer: 1,
+    difficulty: "hard",
+    explanation: "'साँस-साँस में बाँस' पाठ में बांस की बहुआयामी उपयोगिता पर प्रकाश डाला गया है।"
+  },
+  {
+    id: "hindi-hard-2",
+    text: "'जो देखकर भी नहीं देखते' पाठ किस विधा में लिखा गया है?",
+    options: ["कहानी", "निबंध", "संस्मरण", "व्यंग्य"],
+    correctAnswer: 3,
+    difficulty: "hard",
+    explanation: "'जो देखकर भी नहीं देखते' पाठ व्यंग्य विधा में लिखा गया है।"
+  },
+  {
+    id: "hindi-hard-3",
+    text: "'झाँसी की रानी' कविता में 'खूब लड़ी मर्दानी वह तो झाँसी वाली रानी थी' पंक्ति में कौन सा अलंकार है?",
+    options: ["अनुप्रास", "यमक", "पुनरुक्तिप्रकाश", "रूपक"],
+    correctAnswer: 0,
+    difficulty: "hard",
+    explanation: "'खूब लड़ी मर्दानी वह तो झाँसी वाली रानी थी' पंक्ति में 'ल' और 'र' वर्णों की आवृत्ति के कारण अनुप्रास अलंकार है।"
+  },
+  {
+    id: "hindi-hard-4",
+    text: "'वह चिड़िया जो' कविता में 'नीले नभ की सीमा पर' का क्या अर्थ है?",
+    options: ["आकाश के किनारे", "पक्षियों के घोंसले में", "कल्पना की उड़ान में", "दूरदृष्टि में"],
+    correctAnswer: 0,
+    difficulty: "hard",
+    explanation: "'नीले नभ की सीमा पर' का अर्थ आकाश के किनारे है।"
+  },
+  {
+    id: "hindi-hard-5",
+    text: "'लोकगीत' पाठ में लोकगीतों की क्या विशेषता बताई गई है?",
+    options: ["श्रुतिपरक होना", "लिखित परंपरा का होना", "व्यक्तिगत रचनाएँ होना", "शहरी संस्कृति से जुड़ा होना"],
+    correctAnswer: 0,
+    difficulty: "hard",
+    explanation: "'लोकगीत' पाठ में लोकगीतों की विशेषता श्रुतिपरक (मौखिक परंपरा) में होना बताई गई है।"
+  }
+];
+
+// Social Studies questions in different difficulty levels
+export const socialEasyQuestions: Question[] = [
+  {
+    id: "social-easy-1",
+    text: "भारत के किस राज्य में कोणार्क का सूर्य मंदिर स्थित है?",
+    options: ["बिहार", "ओडिशा", "मध्य प्रदेश", "राजस्थान"],
+    correctAnswer: 1,
+    difficulty: "easy",
+    explanation: "कोणार्क का सूर्य मंदिर ओडिशा राज्य में स्थित है।"
+  },
+  {
+    id: "social-easy-2",
+    text: "तक्षशिला विश्वविद्यालय अब किस देश में स्थित है?",
+    options: ["भारत", "पाकिस्तान", "नेपाल", "बांग्लादेश"],
+    correctAnswer: 1,
+    difficulty: "easy",
+    explanation: "तक्षशिला विश्वविद्यालय अब पाकिस्तान में स्थित है।"
+  },
+  {
+    id: "social-easy-3",
+    text: "हड़प्पा सभ्यता की खोज किस नदी के किनारे हुई थी?",
+    options: ["गंगा", "ब्रह्मपुत्र", "सिंधु", "कावेरी"],
+    correctAnswer: 2,
+    difficulty: "easy",
+    explanation: "हड़प्पा सभ्यता की खोज सिंधु नदी के किनारे हुई थी।"
+  },
+  {
+    id: "social-easy-4",
+    text: "पृथ्वी किस आकार की है?",
+    options: ["बिल्कुल गोल", "चपटी", "थोड़ी चपटी गेंद जैसी", "अंडाकार"],
+    correctAnswer: 2,
+    difficulty: "easy",
+    explanation: "पृथ्वी थोड़ी चपटी गेंद के आकार की है, जिसे भूपटीय गोला (Geoid) कहा जाता है।"
+  },
+  {
+    id: "social-easy-5",
+    text: "पंचायती राज व्यवस्था किस स्तर पर कार्य करती है?",
+    options: ["केंद्र सरकार", "राज्य सरकार", "स्थानीय सरकार", "अंतर्राष्ट्रीय स्तर"],
+    correctAnswer: 2,
+    difficulty: "easy",
+    explanation: "पंचायती राज व्यवस्था स्थानीय सरकार के स्तर पर कार्य करती है।"
+  }
+];
+
+export const socialMediumQuestions: Question[] = [
+  {
+    id: "social-medium-1",
+    text: "मोहनजोदड़ो का अर्थ क्या है?",
+    options: ["मृतकों का टीला", "बड़ा किला", "विशाल नगर", "मंदिरों का शहर"],
+    correctAnswer: 0,
+    difficulty: "medium",
+    explanation: "मोहनजोदड़ो का अर्थ 'मृतकों का टीला' है। यह सिंधु घाटी सभ्यता का एक प्रमुख शहर था।"
+  },
+  {
+    id: "social-medium-2",
+    text: "विषुव दिन (Equinox) क्या है?",
+    options: [
+      "जब दिन और रात बराबर होते हैं", 
+      "जब दिन सबसे छोटा होता है", 
+      "जब दिन सबसे लंबा होता है", 
+      "जब सूर्य और चंद्रमा एक सीध में आते हैं"
+    ],
+    correctAnswer: 0,
+    difficulty: "medium",
+    explanation: "विषुव दिन वे दिन होते हैं जब पृथ्वी पर दिन और रात लगभग बराबर होते हैं।"
+  },
+  {
+    id: "social-medium-3",
+    text: "अशोक के अधिकांश शिलालेख किस लिपि में लिखे गए हैं?",
+    options: ["संस्कृत", "पाली", "ब्राह्मी", "खरोष्ठी"],
+    correctAnswer: 2,
+    difficulty: "medium",
+    explanation: "अशोक के अधिकांश शिलालेख ब्राह्मी लिपि में लिखे गए हैं।"
+  },
+  {
+    id: "social-medium-4",
+    text: "भारतीय संविधान में कितनी अनुसूचियां हैं?",
+    options: ["10", "12", "14", "22"],
+    correctAnswer: 1,
+    difficulty: "medium",
+    explanation: "भारतीय संविधान में वर्तमान में 12 अनुसूचियां हैं।"
+  },
+  {
+    id: "social-medium-5",
+    text: "स्थानीय सरकार की तीन-स्तरीय प्रणाली में कौन से स्तर शामिल हैं?",
+    options: [
+      "ग्राम पंचायत, पंचायत समिति, जिला परिषद", 
+      "ग्राम सभा, नगर पालिका, नगर निगम", 
+      "ग्राम पंचायत, नगर पंचायत, नगर परिषद", 
+      "ग्राम सभा, पंचायत समिति, नगर निगम"
+    ],
+    correctAnswer: 0,
+    difficulty: "medium",
+    explanation: "स्थानीय सरकार की तीन-स्तरीय प्रणाली में ग्राम पंचायत, पंचायत समिति (या क्षेत्र पंचायत) और जिला परिषद शामिल हैं।"
+  }
+];
+
+export const socialIntermediateQuestions: Question[] = [
+  {
+    id: "social-intermediate-1", 
+    text: "हड़प्पा सभ्यता के नगर योजना की क्या विशेषता थी?",
+    options: [
+      "अनियोजित सड़क व्यवस्था", 
+      "ग्रिड पद्धति पर आधारित नगर", 
+      "गोलाकार नगर रचना", 
+      "नदी के मध्य में बसे हुए नगर"
+    ],
+    correctAnswer: 1,
+    difficulty: "intermediate",
+    explanation: "हड़प्पा सभ्यता के नगर 'ग्रिड पद्धति' पर आधारित थे, जिसमें सड़कें एक-दूसरे को समकोण पर काटती थीं।"
+  },
+  {
+    id: "social-intermediate-2",
+    text: "महाजनपद काल में कितने प्रमुख महाजनपद थे?",
+    options: ["10", "12", "16", "24"],
+    correctAnswer: 2,
+    difficulty: "intermediate",
+    explanation: "महाजनपद काल में 16 प्रमुख महाजनपद थे। जैसे मगध, कोसल, अंग, वज्जि आदि।"
+  },
+  {
+    id: "social-intermediate-3",
+    text: "चंद्रगुप्त मौर्य के शासनकाल में कौन सा यूनानी राजदूत भारत आया था?",
+    options: ["मेगस्थनीज", "प्लूटार्क", "अरिस्टोटल", "सेल्यूकस"],
+    correctAnswer: 0,
+    difficulty: "intermediate",
+    explanation: "मेगस्थनीज चंद्रगुप्त मौर्य के शासनकाल में यूनानी राजदूत के रूप में भारत आया था। उसने 'इंडिका' नामक पुस्तक लिखी।"
+  },
+  {
+    id: "social-intermediate-4",
+    text: "अक्षांश और देशांतर रेखाओं का क्या उपयोग है?",
+    options: [
+      "केवल दिशा निर्धारण के लिए", 
+      "केवल समय निर्धारण के लिए", 
+      "पृथ्वी पर स्थिति निर्धारित करने के लिए", 
+      "केवल मानचित्र बनाने के लिए"
+    ],
+    correctAnswer: 2,
+    difficulty: "intermediate",
+    explanation: "अक्षांश और देशांतर रेखाओं का उपयोग पृथ्वी पर किसी भी स्थान की सटीक स्थिति निर्धारित करने के लिए किया जाता है।"
+  },
+  {
+    id: "social-intermediate-5",
+    text: "ग्रामसभा का क्या अधिकार है?",
+    options: [
+      "केवल चुनाव करवाना", 
+      "ग्राम पंचायत के कार्यों की निगरानी और अनुमोदन", 
+      "केवल कर निर्धारित करना", 
+      "केवल विकास योजनाएँ बनाना"
+    ],
+    correctAnswer: 1,
+    difficulty: "intermediate",
+    explanation: "ग्रामसभा ग्राम पंचायत के कार्यों की निगरानी और अनुमोदन का अधिकार रखती है। यह एक महत्वपूर्ण जनतांत्रिक संस्था है।"
+  }
+];
+
+export const socialHardQuestions: Question[] = [
+  {
+    id: "social-hard-1",
+    text: "पृथ्वी की परिक्रमा और घूर्णन के बीच क्या अंतर है?",
+    options: [
+      "परिक्रमा सूर्य के चारों ओर होती है, घूर्णन अपनी अक्ष पर", 
+      "परिक्रमा अपनी अक्ष पर होती है, घूर्णन सूर्य के चारों ओर", 
+      "परिक्रमा दिन-रात बनाती है, घूर्णन ऋतु परिवर्तन", 
+      "परिक्रमा एक वर्ष में पूरी होती है, घूर्णन 24 घंटे में"
+    ],
+    correctAnswer: 0,
+    difficulty: "hard",
+    explanation: "पृथ्वी की परिक्रमा सूर्य के चारों ओर होती है (एक वर्ष में), जबकि घूर्णन अपनी अक्ष पर होता है (24 घंटे में)।"
+  },
+  {
+    id: "social-hard-2",
+    text: "कलिंग युद्ध के बाद अशोक ने कौन सा धर्म अपनाया?",
+    options: ["हिन्दू धर्म", "जैन धर्म", "बौद्ध धर्म", "वैदिक धर्म"],
+    correctAnswer: 2,
+    difficulty: "hard",
+    explanation: "कलिंग युद्ध के बाद अशोक ने बौद्ध धर्म अपनाया और अहिंसा का प्रचार किया।"
+  },
+  {
+    id: "social-hard-3",
+    text: "कौनसी नदी सिंधु घाटी सभ्यता का 'जीवन रेखा' मानी जाती थी?",
+    options: ["गंगा", "सिंधु", "सरस्वती", "ब्रह्मपुत्र"],
+    correctAnswer: 1,
+    difficulty: "hard",
+    explanation: "सिंधु नदी को सिंधु घाटी सभ्यता का 'जीवन रेखा' माना जाता था, क्योंकि अधिकांश बस्तियां इसी नदी के किनारे बसी थीं।"
+  },
+  {
+    id: "social-hard-4",
+    text: "मौर्य साम्राज्य के पतन के बाद कौन सा राजवंश शक्तिशाली हुआ?",
+    options: ["गुप्त वंश", "कुषाण वंश", "शुंग वंश", "सातवाहन वंश"],
+    correctAnswer: 2,
+    difficulty: "hard",
+    explanation: "मौर्य साम्राज्य के पतन के बाद शुंग वंश सत्ता में आया, जिसकी स्थापना पुष्यमित्र शुंग ने की थी।"
+  },
+  {
+    id: "social-hard-5",
+    text: "'ध्रुव तारा' (पोलर स्टार) निम्न में से किस दिशा का संकेत करता है?",
+    options: ["उत्तर", "दक्षिण", "पूर्व", "पश्चिम"],
+    correctAnswer: 0,
+    difficulty: "hard",
+    explanation: "'ध्रुव तारा' हमेशा उत्तर दिशा की ओर होता है और इसका उपयोग दिशा निर्धारण के लिए किया जाता है।"
+  }
+];
+
 // Math Chapters based on NCERT 6th class syllabus
 export const mathChapters = [
   "Chapter 1: Knowing Our Numbers",
@@ -518,6 +1077,33 @@ export function generateSubjectTest(subjectId: string, difficulty: DifficultyLev
       subjectName = 'English';
       chapters = englishChapters;
       icon = 'fa-book';
+      break;
+    case 'hindi':
+      easyQuestions = hindiEasyQuestions;
+      mediumQuestions = hindiMediumQuestions;
+      intermediateQuestions = hindiIntermediateQuestions;
+      hardQuestions = hindiHardQuestions;
+      subjectName = 'हिंदी';
+      chapters = hindiChapters;
+      icon = 'fa-language';
+      break;
+    case 'sanskrit':
+      easyQuestions = sanskritEasyQuestions;
+      mediumQuestions = sanskritMediumQuestions;
+      intermediateQuestions = sanskritIntermediateQuestions;
+      hardQuestions = sanskritHardQuestions;
+      subjectName = 'संस्कृत';
+      chapters = sanskritChapters;
+      icon = 'fa-om';
+      break;
+    case 'social':
+      easyQuestions = socialEasyQuestions;
+      mediumQuestions = socialMediumQuestions;
+      intermediateQuestions = socialIntermediateQuestions;
+      hardQuestions = socialHardQuestions;
+      subjectName = 'Social Studies';
+      chapters = socialChapters;
+      icon = 'fa-globe';
       break;
     case 'science':
     default:

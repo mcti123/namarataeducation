@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import FloatingObject from './FloatingObject';
 import { subjects } from '@/lib/data';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface AnimatedBackgroundProps {
   reducedMotion: boolean;
@@ -37,6 +38,15 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
           case 'english':
             objectType = 'book';
             break;
+          case 'hindi':
+            objectType = 'notebook';
+            break;
+          case 'sanskrit':
+            objectType = 'book';
+            break;
+          case 'social':
+            objectType = 'planet';
+            break;
           default:
             objectType = 'notebook';
         }
@@ -59,35 +69,118 @@ const AnimatedBackground: React.FC<AnimatedBackgroundProps> = ({
       });
       
       // Add decorative objects
-      const decorativeCount = 15;
+      const decorativeCount = 30; // Increased from 15 to 30 for more objects
       for (let i = 0; i < decorativeCount; i++) {
-        const radius = 20 + Math.random() * 15;
+        const radius = 20 + Math.random() * 25; // Increased radius range
         const angle = Math.random() * Math.PI * 2;
         const xPos = Math.sin(angle) * radius;
         const zPos = Math.cos(angle) * radius;
+        const yPos = Math.random() * 15 - 7; // More vertical spread
         
         // Randomly select object type
         const objectTypes: ('book' | 'notebook' | 'pencil' | 'planet' | 'rocket')[] = 
           ['pencil', 'rocket', 'planet', 'notebook', 'book'];
           
         const randomType = objectTypes[Math.floor(Math.random() * objectTypes.length)];
-        const colors = ['#FF5733', '#33FF57', '#3357FF', '#F3FF33', '#FF33F3', '#33FFF3'];
+        
+        // More vibrant colors for objects
+        const colors = [
+          '#FF5733', '#33FF57', '#3357FF', '#F3FF33', '#FF33F3', '#33FFF3',
+          '#8A2BE2', '#FF6347', '#00CED1', '#FF1493', '#32CD32', '#FFD700'
+        ];
         const randomColor = colors[Math.floor(Math.random() * colors.length)];
         
+        // Create animated object
         floatingObjects.push(
-          <FloatingObject
+          <motion.div
             key={`decorative-${i}`}
-            position={[xPos, Math.random() * 10 - 5, zPos]}
-            rotation={[Math.random(), Math.random(), Math.random()]}
-            scale={0.8 + Math.random() * 0.4}
-            color={randomColor}
-            objectType={randomType}
-            speed={0.2 + Math.random() * 0.8}
-            amplitude={0.4 + Math.random() * 0.6}
-            reducedMotion={reducedMotion}
-          />
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ 
+              duration: 0.8, 
+              delay: i * 0.05, 
+              ease: "easeOut" 
+            }}
+          >
+            <FloatingObject
+              key={`decorative-inner-${i}`}
+              position={[xPos, yPos, zPos]}
+              rotation={[Math.random(), Math.random(), Math.random()]}
+              scale={0.6 + Math.random() * 0.6}
+              color={randomColor}
+              objectType={randomType}
+              speed={0.2 + Math.random() * 0.8}
+              amplitude={0.4 + Math.random() * 0.6}
+              reducedMotion={reducedMotion}
+            />
+          </motion.div>
         );
       }
+      
+      // Add classroom elements
+      // Desk at the bottom center
+      floatingObjects.push(
+        <motion.div
+          key="classroom-desk"
+          initial={{ opacity: 0, y: 100 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 0.5 }}
+        >
+          <div 
+            className="desk" 
+            style={{
+              position: 'absolute',
+              bottom: '5vh',
+              left: '50%',
+              width: '300px',
+              height: '80px',
+              backgroundColor: '#8B4513',
+              transform: 'translateX(-50%)',
+              borderRadius: '5px',
+              boxShadow: '0 5px 15px rgba(0,0,0,0.3)',
+              zIndex: 5
+            }}
+          />
+        </motion.div>
+      );
+
+      // Blackboard at the center
+      floatingObjects.push(
+        <motion.div
+          key="classroom-blackboard"
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 0.8, scale: 1 }}
+          transition={{ duration: 1, delay: 0.8 }}
+        >
+          <div 
+            className="blackboard" 
+            style={{
+              position: 'absolute',
+              top: '15vh',
+              left: '50%',
+              width: '500px',
+              height: '300px',
+              backgroundColor: '#2E7D32',
+              transform: 'translateX(-50%)',
+              borderRadius: '5px',
+              boxShadow: '0 5px 15px rgba(0,0,0,0.5)',
+              zIndex: 4,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <div style={{ 
+              color: 'rgba(255,255,255,0.8)', 
+              fontSize: '32px', 
+              fontFamily: 'cursive',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+            }}>
+              NCERT Class 6
+            </div>
+          </div>
+        </motion.div>
+      );
       
       setObjects(floatingObjects);
     };

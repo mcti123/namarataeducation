@@ -8,7 +8,7 @@ type FloatingObjectProps = {
   color?: string;
   speed?: number;
   amplitude?: number;
-  objectType: 'book' | 'notebook' | 'pencil' | 'planet' | 'rocket';
+  objectType: 'book' | 'notebook' | 'pencil' | 'planet' | 'rocket' | 'laptop' | 'desk' | 'globe' | 'star';
   onClick?: () => void;
   hoverState?: boolean;
   subjectId?: string;
@@ -119,6 +119,43 @@ const FloatingObject: React.FC<FloatingObjectProps> = ({
           backgroundColor: color,
           borderRadius: '20px 20px 0 0',
           position: 'relative' as const,
+        };
+      case 'laptop':
+        return {
+          width: `${120 * scale}px`,
+          height: `${80 * scale}px`,
+          backgroundColor: '#2c3e50',
+          borderRadius: '4px',
+          position: 'relative' as const,
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+        };
+      case 'desk':
+        return {
+          width: `${180 * scale}px`,
+          height: `${20 * scale}px`,
+          backgroundColor: '#8B4513',
+          borderRadius: '4px',
+          position: 'relative' as const,
+          boxShadow: '0 6px 10px rgba(0, 0, 0, 0.3)',
+        };
+      case 'globe':
+        return {
+          width: `${90 * scale}px`,
+          height: `${90 * scale}px`,
+          backgroundColor: '#3498db',
+          borderRadius: '50%',
+          position: 'relative' as const,
+          boxShadow: 'inset -20px -20px 60px rgba(0,0,0,0.4), 0 0 20px rgba(41,128,185,0.6)',
+          background: 'radial-gradient(circle at 30% 30%, #3498db 0%, #1a5276 100%)',
+        };
+      case 'star':
+        return {
+          width: `${50 * scale}px`,
+          height: `${50 * scale}px`,
+          backgroundColor: color,
+          clipPath: 'polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)',
+          position: 'relative' as const,
+          boxShadow: '0 0 30px rgba(255, 255, 255, 0.7)',
         };
       default:
         return {};
@@ -279,6 +316,144 @@ const FloatingObject: React.FC<FloatingObjectProps> = ({
               left: '20%',
               backgroundColor: 'rgba(255,255,255,0.3)',
               borderRadius: '50%',
+            }}></div>
+          </>
+        );
+      case 'laptop':
+        return (
+          <>
+            {/* Screen */}
+            <div style={{
+              position: 'absolute',
+              width: '100%',
+              height: '70%',
+              top: '0',
+              borderRadius: '4px 4px 0 0',
+              backgroundColor: '#34495e',
+              overflow: 'hidden',
+            }}>
+              <div style={{
+                position: 'absolute',
+                width: '90%',
+                height: '80%',
+                top: '10%',
+                left: '5%',
+                backgroundColor: '#2980b9',
+                borderRadius: '2px',
+                background: 'linear-gradient(135deg, #3498db 0%, #2c3e50 100%)',
+              }}></div>
+            </div>
+            {/* Keyboard */}
+            <div style={{
+              position: 'absolute',
+              width: '100%',
+              height: '30%',
+              bottom: '0',
+              borderRadius: '0 0 4px 4px',
+              backgroundColor: '#7f8c8d',
+            }}>
+              <div style={{
+                position: 'absolute',
+                width: '30%',
+                height: '30%',
+                bottom: '30%',
+                left: '35%',
+                backgroundColor: '#95a5a6',
+                borderRadius: '2px',
+              }}></div>
+            </div>
+          </>
+        );
+      case 'desk':
+        return (
+          <>
+            {/* Desk legs */}
+            <div style={{
+              position: 'absolute',
+              width: '10%',
+              height: '50px',
+              bottom: '-45px',
+              left: '15%',
+              backgroundColor: '#6d4c41',
+              borderRadius: '0 0 4px 4px',
+            }}></div>
+            <div style={{
+              position: 'absolute',
+              width: '10%',
+              height: '50px',
+              bottom: '-45px',
+              right: '15%',
+              backgroundColor: '#6d4c41',
+              borderRadius: '0 0 4px 4px',
+            }}></div>
+            {/* Desk surface details */}
+            <div style={{
+              position: 'absolute',
+              width: '90%',
+              height: '5px',
+              top: '0',
+              left: '5%',
+              backgroundColor: 'rgba(255,255,255,0.2)',
+              borderRadius: '2px',
+            }}></div>
+          </>
+        );
+      case 'globe':
+        return (
+          <>
+            {/* Continents */}
+            <div style={{
+              position: 'absolute',
+              width: '60%',
+              height: '25%',
+              top: '30%',
+              left: '20%',
+              backgroundColor: '#27ae60',
+              borderRadius: '50%',
+              transform: 'rotate(15deg)',
+              opacity: 0.8,
+            }}></div>
+            <div style={{
+              position: 'absolute',
+              width: '30%',
+              height: '30%',
+              top: '20%',
+              left: '10%',
+              backgroundColor: '#27ae60',
+              borderRadius: '50%',
+              transform: 'rotate(-20deg)',
+              opacity: 0.8,
+            }}></div>
+            {/* Stand */}
+            <div style={{
+              position: 'absolute',
+              width: '10%',
+              height: '20%',
+              bottom: '-15%',
+              left: '45%',
+              backgroundColor: '#95a5a6',
+              borderRadius: '0 0 4px 4px',
+            }}></div>
+            <div style={{
+              position: 'absolute',
+              width: '30%',
+              height: '5%',
+              bottom: '-15%',
+              left: '35%',
+              backgroundColor: '#7f8c8d',
+              borderRadius: '4px',
+            }}></div>
+          </>
+        );
+      case 'star':
+        return (
+          <>
+            <div style={{
+              position: 'absolute',
+              inset: '0',
+              borderRadius: '50%',
+              background: 'radial-gradient(circle at center, white 0%, transparent 70%)',
+              opacity: 0.7,
             }}></div>
           </>
         );
