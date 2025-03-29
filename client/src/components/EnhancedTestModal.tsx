@@ -420,7 +420,7 @@ const EnhancedTestModal: React.FC<EnhancedTestModalProps> = ({
                 Select a specific chapter to test your knowledge on that topic.
               </CardDescription>
             </CardHeader>
-            <CardContent className="max-h-[300px] overflow-y-auto scrollbar-hide">
+            <CardContent className="max-h-[300px] overflow-y-auto custom-scrollbar">
               <div className="space-y-2">
                 {availableChapters.map((chapter, index) => (
                   <div 
