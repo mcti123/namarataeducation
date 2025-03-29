@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
@@ -57,6 +57,9 @@ const EnhancedTestModal: React.FC<EnhancedTestModalProps> = ({
   reducedMotion,
   subjectId
 }) => {
+  // Create a unique identifier for each test session
+  const [sessionId, setSessionId] = useState<string>(Date.now().toString());
+  
   const [currentTest, setCurrentTest] = useState<Test>({ ...initialTest, questions: [...initialTest.questions] });
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [userAnswers, setUserAnswers] = useState<UserAnswer[]>([]);
@@ -69,19 +72,35 @@ const EnhancedTestModal: React.FC<EnhancedTestModalProps> = ({
   const [availableChapters, setAvailableChapters] = useState<string[]>([]);
   const [selectedChapter, setSelectedChapter] = useState<string | null>(null);
   
-  // Load chapters based on subject ID
+  // Reset test state when modal is opened/closed
   useEffect(() => {
-    // Get the appropriate chapters for the selected subject
-    const subjectChapters = getChaptersForSubject(subjectId);
-    setAvailableChapters(subjectChapters);
-    
-    // Create initial test for this subject
-    const initialSubjectTest = generateSubjectTest(subjectId, difficulty);
-    setCurrentTest(initialSubjectTest);
-  }, [subjectId]);
+    if (isOpen) {
+      // Generate a new session ID whenever the modal is opened
+      setSessionId(Date.now().toString());
+      
+      // Reset to intro state
+      setTestState('intro');
+      setCurrentQuestionIndex(0);
+      setUserAnswers([]);
+      setTestResult(null);
+      setShowConfetti(false);
+      setShowTrophy(false);
+      
+      // Get the appropriate chapters for the selected subject
+      const subjectChapters = getChaptersForSubject(subjectId);
+      setAvailableChapters(subjectChapters);
+      
+      // Create initial test for this subject
+      const initialSubjectTest = generateSubjectTest(subjectId, difficulty);
+      setCurrentTest(initialSubjectTest);
+    }
+  }, [isOpen, subjectId, difficulty]);
   
   // Generate a new test with different questions based on difficulty
   const generateNewTest = (difficulty: DifficultyLevel, chapter?: string) => {
+    // Generate a new unique timestamp to ensure different questions each time
+    const timestamp = Date.now().toString() + Math.floor(Math.random() * 1000).toString();
+    
     let newTest;
     
     if (chapter) {
@@ -89,10 +108,26 @@ const EnhancedTestModal: React.FC<EnhancedTestModalProps> = ({
       const chapterIndex = availableChapters.findIndex(c => c === chapter);
       // Generate a chapter-specific test
       newTest = generateSubjectTest(subjectId, difficulty, (chapterIndex + 1).toString());
+      
+      // Ensure this test has a unique ID based on the session and timestamp
+      newTest.id = `${subjectId}-chapter-${chapterIndex + 1}-${sessionId}-${timestamp}`;
+      newTest.chapter = chapter;
+      newTest.title = `${chapter} Test`;
     } else {
       // Generate a full subject test
       newTest = generateSubjectTest(subjectId, difficulty);
+      
+      // Ensure this test has a unique ID based on the session and timestamp
+      newTest.id = `${subjectId}-full-${sessionId}-${timestamp}`;
     }
+    
+    // Make sure each question also has a unique ID
+    newTest.questions = newTest.questions.map((q, index) => ({
+      ...q,
+      id: `${newTest.id}-q${index}-${timestamp}`
+    }));
+    
+    console.log(`Generated new test for subject: ${subjectId}, difficulty: ${difficulty}, chapter: ${chapter || 'full'}`);
     
     setCurrentTest(newTest);
     resetTest(newTest);
